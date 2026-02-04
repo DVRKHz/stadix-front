@@ -11,6 +11,7 @@ export default function NonParametricPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [inputMode, setInputMode] = useState<'manual' | 'file'>('manual');
 
   const handleCalculate = async () => {
     setLoading(true);
@@ -30,7 +31,7 @@ export default function NonParametricPage() {
         const cols = matrix[0].length;
         if (matrix.some(r => r.length !== cols)) throw new Error("Todas las filas deben tener la misma cantidad de columnas.");
 
-        const res = await fetch(`${API_URL}/api/v1/nonparametric/chi-square`, {
+        const res = await fetch(`${API_URL}/api/v1/nonparametric/upload`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ observed_data: matrix })
@@ -125,26 +126,110 @@ else:
       {/* LABORATORIO */}
       {activeTab === 'lab' && (
         <div className="space-y-8 animate-fade-in">
-           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-             <h3 className="text-sm font-bold text-gray-700 mb-2">Tabla de Contingencia (Matriz)</h3>
-             <p className="text-xs text-gray-500 mb-3">Ingresa los conteos separados por comas. Cada línea nueva es una fila de la tabla.</p>
-             
-             <textarea 
-                 className="w-full p-4 border rounded-lg bg-gray-50 font-mono text-sm h-32 focus:ring-2 focus:ring-blue-500"
-                 placeholder={`Ejemplo:\n10, 20\n15, 25\n(Fila 1: Grupo A, Fila 2: Grupo B)`}
-                 value={inputMatrix}
-                 onChange={(e) => setInputMatrix(e.target.value)}
-             />
-             
-             {error && <div className="text-red-500 text-xs mt-2 font-bold">{error}</div>}
 
-             <button 
-                onClick={handleCalculate}
-                disabled={loading || !inputMatrix.trim()}
-                className="mt-4 w-full py-2 bg-gray-900 text-white rounded-lg font-bold hover:bg-black disabled:bg-gray-300 transition-colors"
-             >
-                {loading ? "Calculando..." : "Ejecutar Prueba Chi-Cuadrada"}
-             </button>
+          {/* Panel de Entrada */}
+           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+             
+             {/* Selector de Modo */}
+             <div className="flex justify-center mb-6">
+                <div className="bg-gray-100 p-1 rounded-lg inline-flex">
+                    <button 
+                        onClick={() => setInputMode('manual')}
+                        className={`px-4 py-2 text-sm font-bold rounded-md transition-all ${inputMode === 'manual' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                    >
+                        ✍️ Manual
+                    </button>
+                    <button 
+                        onClick={() => setInputMode('file')}
+                        className={`px-4 py-2 text-sm font-bold rounded-md transition-all ${inputMode === 'file' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                    >
+                        📂 Excel / CSV
+                    </button>
+                </div>
+             </div>
+
+             {/*Opcion A: Manual (Inputs de texto)*/}
+             {inputMode === 'manual' && (
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <h3 className="text-sm font-bold text-gray-700 mb-2">Tabla de Contingencia (Matriz)</h3>
+                <p className="text-xs text-gray-500 mb-3">Ingresa los conteos separados por comas. Cada línea nueva es una fila de la tabla.</p>
+             
+                <textarea 
+                   className="w-full p-4 border rounded-lg bg-gray-50 font-mono text-sm h-32 focus:ring-2 focus:ring-blue-500"
+                   placeholder={`Ejemplo:\n10, 20\n15, 25\n(Fila 1: Grupo A, Fila 2: Grupo B)`}
+                   value={inputMatrix}
+                   onChange={(e) => setInputMatrix(e.target.value)}
+                />
+             
+                 {error && <div className="text-red-500 text-xs mt-2 font-bold">{error}</div>}
+
+                <button 
+                   onClick={handleCalculate}
+                   disabled={loading || !inputMatrix.trim()}
+                   className="mt-4 w-full py-2 bg-gray-900 text-white rounded-lg font-bold hover:bg-black disabled:bg-gray-300 transition-colors"
+                >
+                   {loading ? "Calculando..." : "Ejecutar Prueba Chi-Cuadrada"}
+                 </button>
+                </div>
+              )}
+
+             {/* Opción B: Archivo (Carga Automática) */}
+             {inputMode === 'file' && (
+                <div className="animate-fade-in text-center border-2 border-dashed border-gray-300 rounded-xl p-8 hover:bg-gray-50 transition-colors relative">
+                    <input 
+                        type="file" 
+                        accept=".csv, .xlsx, .xls"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        onChange={async (e) => {
+                            if (!e.target.files || e.target.files.length === 0) return;
+                            
+                            const file = e.target.files[0];
+                            setLoading(true);
+                            setError("");
+                            
+                            const formData = new FormData();
+                            formData.append("file", file);
+
+                            try {
+                                const res = await fetch(`${API_URL}/api/v1/nonparametric/upload`, {
+                                    method: "POST",
+                                    body: formData,
+                                });
+                                
+                                if (!res.ok) {
+                                  let errMsg = "Error al procesar archivo.";
+                                  try {
+                                     const errData = await res.json();
+                                     errMsg = errData.detail || errMsg;
+                                  } catch {
+                                     errMsg = await res.text(); // si no es JSON, lo lee como texto
+                                  }
+                                  throw new Error(errMsg);
+                                }
+
+                                const data = await res.json();
+
+                                setResult(data);
+                                
+
+                            } catch (err: any) {
+                                console.error(err);
+                                setError(err.message || "Error de conexión.");
+                            } finally {
+                                setLoading(false);
+                            }
+                        }}
+                    />
+                    <div className="pointer-events-none">
+                        <div className="text-4xl mb-2">📈</div>
+                        <p className="text-sm font-bold text-gray-700">Sube tu Excel o CSV con 2 columnas</p>
+                        <ul className="text-xs text-gray-400 mt-2 space-y-1">
+                            <li>• Fila 1: Grupo A</li>
+                            <li>• Fila 2: Grupo B</li>
+                        </ul>
+                    </div>
+                </div>
+             )}
            </div>
 
            {result && (
@@ -155,17 +240,19 @@ else:
                     
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-sm text-gray-600">Estadístico $\chi^2$:</span>
-                        <span className="font-mono font-bold text-lg">{result.statistic.toFixed(4)}</span>
+                        <span className="font-mono font-bold text-lg">
+                           {result?.statistic !== undefined ? result.statistic.toFixed(4) : "—"}
+                        </span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-sm text-gray-600">Valor P (p-value):</span>
                         <span className={`font-mono font-bold text-lg ${result.is_significant ? "text-green-600" : "text-gray-600"}`}>
-                            {result.p_value.toFixed(4)}
+                           {result?.p_value !== undefined ? result.p_value.toFixed(4) : "—"}
                         </span>
                     </div>
                     <div className="flex justify-between items-center mb-4">
                         <span className="text-sm text-gray-600">Grados de libertad:</span>
-                        <span className="font-mono font-bold">{result.dof}</span>
+                        <span className="font-mono font-bold">{result?.dof ?? "—"}</span>
                     </div>
 
                     <div className={`p-3 rounded-lg text-sm font-bold text-center ${result.is_significant ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}>
@@ -185,7 +272,7 @@ else:
                                     <tr key={i} className="border-b border-gray-200 last:border-0">
                                         {row.map((val, j) => (
                                             <td key={j} className="p-2 font-mono text-gray-600 bg-white border border-gray-100 m-1">
-                                                {val.toFixed(2)}
+                                                {val !== undefined ? val.toFixed(2) : "—"}
                                             </td>
                                         ))}
                                     </tr>
