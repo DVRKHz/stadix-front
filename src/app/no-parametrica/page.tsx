@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 
 export default function NonParametricPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [inputMatrix, setInputMatrix] = useState("");
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -72,6 +72,35 @@ else:
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const rCode = `# Prueba Chi-Cuadrada de Independencia
+# 1. Crear la tabla de contingencia como una matriz
+# byrow = TRUE asegura que se llene por filas como en el ejemplo de Python
+tabla <- matrix(c(10, 20, 
+                  20, 40), 
+                nrow = 2, byrow = TRUE)
+
+# 2. Ejecutar la prueba Chi-Cuadrado
+# chisq.test() es la función nativa de R
+resultado <- chisq.test(tabla)
+
+# 3. Extraer valores
+chi2 <- resultado$statistic
+p    <- resultado$p.value
+
+cat(sprintf("Estadístico Chi2: %.4f\n", chi2))
+cat(sprintf("Valor p: %.4f\n", p))
+
+if (p < 0.05) {
+    print("Hay relación significativa (Dependencia)")
+} else {
+    print("Son independientes")`;
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -84,6 +113,7 @@ else:
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🔬 Prueba Chi-Cuadrada</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* CONCEPTOS */}
@@ -286,7 +316,7 @@ else:
         </div>
       )}
 
-      {/* CÓDIGO */}
+      {/* CÓDIGO PYTHON*/}
       {activeTab === 'code' && (
         <div className="max-w-4xl mx-auto animate-fade-in">
           <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
@@ -303,6 +333,28 @@ else:
             </div>
             <div className="p-6 overflow-x-auto">
               <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{pythonCode}</code></pre>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CÓDIGO R*/}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">chi_cuadrada.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
             </div>
           </div>
         </div>

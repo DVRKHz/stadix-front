@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import { API_URL } from '@/config/api';
 
 export default function DescriptivePage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [inputData, setInputData] = useState("");
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -71,11 +71,39 @@ desviacion = stats.stdev(datos)
 print(f"Media: {media}")
 print(f"Desviación Estándar: {desviacion}")`;
 
+  // Código R básico y didáctico para la pestaña 4
+  const rCode = `# Cálculo de Estadísticos Descriptivos Básicos en R
+
+# Vector de datos (usamos c para combinar los valores)
+datos <- c(10, 12, 23, 23, 16, 23, 21, 16)
+
+# 3.1 Tendencia Central
+media   <- mean(datos)
+mediana <- median(datos)
+
+# R base no tiene una función 'mode' estadística directa. 
+# Usamos una combinación para encontrar el valor más frecuente:
+moda <- names(which.max(table(datos)))
+
+# 3.2 Dispersión
+varianza   <- var(datos)  # Varianza muestral
+desviacion <- sd(datos)   # Desviación estándar muestral
+
+# Imprimir resultados
+cat(paste("Media:", media, "\n"))
+cat(paste("Desviación Estándar:", desviacion, "\n"))`;
+
   const handleCopy = () => {
     navigator.clipboard.writeText(pythonCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
@@ -89,6 +117,7 @@ print(f"Desviación Estándar: {desviacion}")`;
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* TAB 1: CONCEPTOS */}
@@ -373,9 +402,40 @@ print(f"Desviación Estándar: {desviacion}")`;
           <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start gap-3">
              <span className="text-2xl">💡</span>
              <div>
-               <h4 className="font-bold text-blue-900 text-sm">Nota de Programación</h4>
+               <h4 className="font-bold text-blue-900 text-sm">Nota de Python</h4>
                <div className="text-blue-800 text-xs mt-1">
                  Python tiene un módulo nativo llamado <code>statistics</code> que simplifica mucho las cosas. Para análisis más avanzados (como los que hace esta app), se suele usar <strong>Pandas</strong> o <strong>NumPy</strong>.
+               </div>
+             </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: CÓDIGO R */}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">calculos_stats.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
+            </div>
+          </div>
+          <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start gap-3">
+             <span className="text-2xl">💡</span>
+             <div>
+               <h4 className="font-bold text-blue-900 text-sm">Nota de R</h4>
+               <div className="text-blue-800 text-xs mt-1">
+                 R no requiere módulos externos para estadística básica; funciones como mean() y sd() son nativas del lenguaje. Sin embargo, para análisis más complejos, se recomienda usar paquetes como <strong>dplyr</strong> o <strong>data.table</strong>.
                </div>
              </div>
           </div>

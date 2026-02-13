@@ -11,7 +11,7 @@ import { ProbabilityPDF } from '@/components/reports/ProbabilityPDF';
 import { toPng } from 'html-to-image';
 
 export default function ProbabilityPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [distType, setDistType] = useState<'binomial' | 'poisson' | 'normal'>('binomial');
   const [copied, setCopied] = useState(false);
   
@@ -142,6 +142,30 @@ print(f"P(Z < 1.96) Normal: {prob_normal:.4f}")`;
     setTimeout(() => setCopied(false), 2000);
   };
 
+   // --- CÓDIGO R DIDÁCTICO ---
+   const rCode = `# Cálculo de Probabilidades con R
+
+# 1. Distribución Binomial (n=10, p=0.5, k=5)
+# 'd' significa Densidad/Probabilidad puntual (PMF)
+prob_binom <- dbinom(5, size = 10, prob = 0.5)
+cat(sprintf("P(X=5) Binomial: %.4f\n", prob_binom))
+
+# 2. Distribución Poisson (lambda=3, k=2)
+# 'd' para la probabilidad exacta de un evento
+prob_poisson <- dpois(2, lambda = 3)
+cat(sprintf("P(X=2) Poisson: %.4f\n", prob_poisson))
+
+# 3. Distribución Normal (media=0, std=1, x=1.96)
+# 'p' significa Probabilidad acumulada (CDF)
+prob_normal <- pnorm(1.96, mean = 0, sd = 1)
+cat(sprintf("P(Z < 1.96) Normal: %.4f\n", prob_normal))`;
+
+   const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+   };
+
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -156,6 +180,7 @@ print(f"P(Z < 1.96) Normal: {prob_normal:.4f}")`;
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* --- TAB 1: CONCEPTOS (TEORÍA COMPLETA CON LATEX) --- */}
@@ -412,6 +437,45 @@ print(f"P(Z < 1.96) Normal: {prob_normal:.4f}")`;
                </div>
              </div>
           </div>
+          
+        </div>
+      )}
+      {/* --- TAB 4: CÓDIGO R --- */}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">probabilidad.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
+            </div>
+          </div>
+          
+          <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start gap-3">
+             <span className="text-2xl">💡</span>
+             <div>
+               <h4 className="font-bold text-blue-900 text-sm">Nota sobre R Stats</h4>
+               <div className="text-blue-800 text-xs mt-1">
+                 En R, usamos funciones con prefijos:
+                 <ul className="list-disc pl-4 mt-2 space-y-1">
+                   <li><code>d</code> (Density): Probabilidad puntual (PMF) o acumulada (CDF)</li>
+                   <li><code>p</code> (Probability): Probabilidad acumulada (CDF)</li>
+                   <li><code>q</code> (Quantile): Valor de la variable dado un percentil</li>
+                   <li><code>r</code> (Random): Genera valores aleatorios de una distribución</li>
+                 </ul>
+               </div>
+             </div>
+          </div>
+
         </div>
       )}
     </div>

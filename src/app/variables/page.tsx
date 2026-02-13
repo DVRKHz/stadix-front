@@ -4,7 +4,7 @@ import { useState } from "react";
 import VariableAnalyzer from "@/components/VariableAnalyzer";
 
 export default function VariablesPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [copied, setCopied] = useState(false);
 
   // El código didáctico que mostraremos
@@ -30,6 +30,29 @@ export default function VariablesPage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+    const rCode = `# Ejemplo básico: Determinar el tipo de dato de una sola variable
+
+    dato <- 10.5  # En R usamos <- para asignar, aunque = también funciona
+
+    # 1. Verificamos la clase del objeto
+    tipo <- class(dato)
+
+    if (tipo == "character") {
+        print("Es Cualitativa (Texto)")
+    
+    } else if (tipo == "integer") {
+        print("Es Cuantitativa Discreta (Número Entero)")
+    
+    } else if (tipo == "numeric") {
+        print("Es Cuantitativa Continua (Número Decimal)")
+      `;
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <div className="max-w-5xl mx-auto animate-fade-in pb-20">
@@ -65,6 +88,14 @@ export default function VariablesPage() {
           }`}
         >
           <span>💻</span> Código Python
+        </button>
+        <button
+          onClick={() => setActiveTab('code2')}
+          className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${
+            activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600"
+          }`}
+        >
+          <span>💻</span> Código R
         </button>
       </div>
 
@@ -209,6 +240,64 @@ export default function VariablesPage() {
                   <li><strong>str (String):</strong> Son cadenas de texto, equivalentes a variables <strong>Cualitativas</strong>.</li>
                   <li><strong>int (Integer):</strong> Son números enteros, equivalentes a <strong>Discretas</strong>.</li>
                   <li><strong>float (Flotante):</strong> Son números con punto decimal, equivalentes a <strong>Continuas</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* --- PESTAÑA 4: CÓDIGO R --- */}
+      {activeTab === 'code2' && (
+        <section className="animate-fade-in max-w-4xl mx-auto">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            {/* Barra superior estilo editor */}
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">analisis_variable.R</span>
+              </div>
+              <button 
+                onClick={handleCopyR}
+                className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded transition-colors flex items-center gap-2"
+              >
+                {copied ? (
+                  <>
+                    <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Copiado
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    Copiar
+                  </>
+                )}
+              </button>
+            </div>
+            
+            {/* Área de código */}
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300">
+                <code>
+                  {rCode}
+                </code>
+              </pre>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start gap-3">
+            <span className="text-2xl">💡</span>
+            <div>
+              <h4 className="font-bold text-blue-900 text-sm">Explicación paso a paso</h4>
+              
+              <div className="text-blue-800 text-xs mt-1">
+                En R, la clasificación de datos es similar a Python:
+                <ul className="list-disc pl-4 mt-2 space-y-1">
+                  <li><strong>character:</strong> Son cadenas de texto, equivalentes a variables <strong>Cualitativas</strong>.</li>
+                  <li><strong>integer:</strong> Son números enteros, equivalentes a <strong>Discretas</strong>.</li>
+                  <li><strong>numeric:</strong> Son números con punto decimal, equivalentes a <strong>Continuas</strong>.</li>
                 </ul>
               </div>
             </div>

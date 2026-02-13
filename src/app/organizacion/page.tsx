@@ -12,7 +12,7 @@ import { ReferenceLine } from 'recharts';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 export default function OrganizacionPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [inputData, setInputData] = useState("");
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,12 @@ export default function OrganizacionPage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   const handleCalculate = async () => {
     setLoading(true);
@@ -67,6 +73,30 @@ print(tabla)
 tabla.plot(kind='bar', title="Gráfico de Barras")
 # kind='pie' para circular, kind='box' para caja`;
 
+  // Codigo en R para mostrar en la pestaña didáctica
+  const rCode = `# Herramientas para organizar datos (R)
+
+# Lista de datos brutos (en R se usan vectores con c())
+datos <- c(12, 15, 12, 18, 20, 12, 15)
+
+# Crear una estructura de tabla (Data Frame)
+df <- data.frame(valor = datos)
+
+# 1. Generar Tabla de Frecuencias
+# table() es la función nativa que cuenta las frecuencias
+tabla <- table(df$valor)
+
+print("--- Tabla de Frecuencias ---")
+print(tabla)
+
+# 2. Generar Gráficos
+# barplot() crea visualizaciones directas desde la tabla
+barplot(tabla, main = "Gráfico de Barras", col = "skyblue")
+
+# Para otros tipos:
+# pie(tabla)          # Para circular
+# boxplot(df$valor)    # Para caja (se usa el dato bruto, no la tabla)`;
+
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -79,6 +109,7 @@ tabla.plot(kind='bar', title="Gráfico de Barras")
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📊 Tablas y Gráficas</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* TAB 1: CONCEPTOS */}
@@ -344,6 +375,62 @@ tabla.plot(kind='bar', title="Gráfico de Barras")
                   <li><code>DataFrame</code>: Es el equivalente a una hoja de cálculo con filas y columnas.</li>
                   <li><code>value_counts()</code>: Agrupa automáticamente los valores repetidos (hace el conteo de $f_i$).</li>
                   <li><code>plot()</code>: Es la función mágica que convierte esos números en imágenes (barras, pastel, etc).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* TAB 4: CÓDIGO EN R (ESTILIZADO) */}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            {/* Barra superior estilo editor */}
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">generar_graficas.R</span>
+              </div>
+              <button 
+                onClick={handleCopyR}
+                className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded transition-colors flex items-center gap-2"
+              >
+                {copied ? (
+                  <>
+                    <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Copiado
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    Copiar
+                  </>
+                )}
+              </button>
+            </div>
+            
+            {/* Área de código */}
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300">
+                <code>{rCode}</code>
+              </pre>
+            </div>
+          </div>
+
+          {/* Explicación Fuera del Contenedor */}
+          <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start gap-3">
+            <span className="text-2xl">💡</span>
+            <div>
+              <h4 className="font-bold text-blue-900 text-sm">¿Cómo funciona este código?</h4>
+              <div className="text-blue-800 text-xs mt-1">
+                En R, usamos la librería <strong>ggplot2</strong> para imitar lo que hace Excel:
+                <ul className="list-disc pl-4 mt-2 space-y-1">
+                  <li><code>DataFrame</code>: Es el equivalente a una hoja de cálculo con filas y columnas.</li>
+                  <li><code>table()</code>: Agrupa automáticamente los valores repetidos (hace el conteo de $f_i$).</li>
+                  <li><code>ggplot()</code>: Es la función mágica que convierte esos números en imágenes (barras, pastel, etc).</li>
                 </ul>
               </div>
             </div>

@@ -15,7 +15,7 @@ import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 
 export default function InferencialPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [inputX, setInputX] = useState("");
   const [inputY, setInputY] = useState("");
   const [result, setResult] = useState<any>(null);
@@ -104,6 +104,31 @@ print(f"Correlación (r): {r:.4f}")`;
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const rCode = `# Regresión Lineal con R
+
+# Datos de dos variables (Vectores)
+x <- c(1, 2, 3, 4, 5)
+y <- c(2, 4, 5, 4, 5)
+
+# Calcular regresión (y ~ x significa "y en función de x")
+# lm significa "Linear Model"
+modelo <- lm(y ~ x)
+
+# Extraer valores específicos
+slope     <- coef(modelo)[2]    # Pendiente (m)
+intercept <- coef(modelo)[1]    # Intercepto (b)
+r         <- cor(x, y)          # Correlación de Pearson
+
+# Imprimir resultados con formato
+cat(sprintf("Ecuación: y = %.2fx + %.2f\n", slope, intercept))
+cat(sprintf("Correlación (r): %.4f\n", r))`;
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -116,6 +141,7 @@ print(f"Correlación (r): {r:.4f}")`;
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Teoría Fundamental</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🔬 Regresión y Correlación</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* --- TAB 1: CONCEPTOS --- */}
@@ -384,7 +410,7 @@ print(f"Correlación (r): {r:.4f}")`;
         </div>
       )}
 
-      {/* --- TAB 3: CÓDIGO --- */}
+      {/* --- TAB 3: CÓDIGO PYTHON --- */}
       {activeTab === 'code' && (
         <div className="max-w-4xl mx-auto animate-fade-in">
           <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
@@ -401,6 +427,28 @@ print(f"Correlación (r): {r:.4f}")`;
             </div>
             <div className="p-6 overflow-x-auto">
               <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{pythonCode}</code></pre>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- TAB 4: CÓDIGO R --- */}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">regresion_lineal.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
             </div>
           </div>
         </div>

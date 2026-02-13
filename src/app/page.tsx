@@ -93,8 +93,8 @@ export default function Home() {
           />
           <FeatureCard 
             icon="💻" 
-            title="Código Python" 
-            text="Aprende programación estadística viendo el código real que ejecuta cada análisis." 
+            title="Códigos de Programación" 
+            text="Aprende programación estadística viendo los códigos reales que ejecuta cada análisis." 
           />
         </div>
       </div>
@@ -130,6 +130,7 @@ export default function Home() {
       {/* --- FOOTER SIMPLE --- */}
       <div className="text-center mt-20 text-slate-400 text-sm">
         <p>© {new Date().getFullYear()} Universidad Autónoma de Chiapas - Proyecto Educativo. Desarrollado por Antonio E.P. Heredia y Jorge J.P. Heredia</p>
+        <p>Contribuciones por Rodrigo Martínez y Cristóbal Pérez.</p>
       </div>
 
     </div>

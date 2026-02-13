@@ -11,7 +11,7 @@ import { HypothesisPDF } from '@/components/reports/HypothesisPDF';
 import { toPng } from 'html-to-image';
 
 export default function HypothesisPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   const [testType, setTestType] = useState<'t1' | 't2' | 'anova'>('t1');
   
   // Estados de inputs (Texto para facilitar edición)
@@ -155,6 +155,42 @@ if p_val < 0.05:
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const rCode = `# Pruebas de Hipótesis en R (Base)
+
+# 1. T-Student (1 muestra) vs media teórica (mu=50)
+data <- c(52, 55, 49, 58, 54)
+prueba1 <- t.test(data, mu = 50)
+p_val1 <- prueba1$p.value
+
+# 2. T-Student (2 muestras independientes)
+grupo_A <- c(85, 88, 90, 92)
+grupo_B <- c(78, 82, 80, 85)
+prueba2 <- t.test(grupo_A, grupo_B)
+p_val2 <- prueba2$p.value
+
+# 3. ANOVA (3 grupos)
+g1 <- c(10, 12, 11)
+g2 <- c(15, 18, 16)
+g3 <- c(20, 22, 19)
+
+# En R, ANOVA suele hacerse combinando los datos en un data.frame
+valores <- c(g1, g2, g3)
+grupos  <- factor(c(rep("G1", 3), rep("G2", 3), rep("G3", 3)))
+prueba3 <- aov(valores ~ grupos)
+p_val3  <- summary(prueba3)[[1]][["Pr(>F)"]][1]
+
+# Impresión de ejemplo (usando el p-valor de ANOVA)
+cat(sprintf("Valor P: %f\n", p_val3))
+
+if (p_val3 < 0.05) {
+    print("Rechazamos H0 (Diferencia Significativa)")`;
+
+  const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="max-w-5xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -170,6 +206,7 @@ if p_val < 0.05:
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🔬 Laboratorio</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* --- TAB 1: CONCEPTOS --- */}
@@ -361,6 +398,28 @@ if p_val < 0.05:
             </div>
             <div className="p-6 overflow-x-auto">
               <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{pythonCode}</code></pre>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- TAB 4: CÓDIGO --- */}
+      {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">hipotesis.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
             </div>
           </div>
         </div>

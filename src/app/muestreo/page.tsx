@@ -7,7 +7,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { SamplingPDF } from '@/components/reports/SamplingPDF';
 
 export default function SamplingPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
   
   // Estados (Texto para inputs decimales)
   const [confidence, setConfidence] = useState("95"); // %
@@ -74,6 +74,45 @@ else:
 
 print(f"Muestra necesaria: {math.ceil(n)}")`;
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(pythonCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const rCode = `# Cálculo de Tamaño de Muestra (n)
+confianza <- 0.95
+error     <- 0.05
+p         <- 0.5
+N         <- 1000  # Población (NULL si es infinita)
+
+# 1. Valor Z (Equivalente a stats.norm.ppf)
+# qnorm devuelve el cuantil para una probabilidad dada
+alpha <- 1 - confianza
+z     <- qnorm(1 - alpha/2)
+
+# 2. Cálculo del numerador
+numerador <- (z^2) * p * (1 - p)
+
+# 3. Lógica para población finita o infinita
+if (!is.null(N)) {
+    # Población Finita
+    denominador <- (error^2 * (N - 1)) + numerador
+    n <- (N * numerador) / denominador
+} else {
+    # Población Infinita
+    n <- numerador / error^2
+}
+
+# ceiling() es el equivalente a math.ceil()
+cat(sprintf("Muestra necesaria: %d\n", ceiling(n)))`;
+
+const handleCopyR = () => {
+    navigator.clipboard.writeText(rCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="max-w-5xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
@@ -85,6 +124,7 @@ print(f"Muestra necesaria: {math.ceil(n)}")`;
         <button onClick={() => setActiveTab('concepts')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'concepts' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>📖 Conceptos</button>
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
+        <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
       </div>
 
       {/* CONCEPTOS */}
@@ -187,12 +227,48 @@ print(f"Muestra necesaria: {math.ceil(n)}")`;
         </div>
       )}
 
-      {/* CÓDIGO */}
+      {/* CÓDIGO PYTHON */}
       {activeTab === 'code' && (
-        <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl p-6">
-            <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{pythonCode}</code></pre>
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">muestreo.py</span>
+              </div>
+              <button onClick={handleCopy} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{pythonCode}</code></pre>
+            </div>
+          </div>
         </div>
-      )}
+        )}
+        {/* CÓDIGO R */}
+        {activeTab === 'code2' && (
+        <div className="max-w-4xl mx-auto animate-fade-in">
+          <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="ml-3 text-gray-400 font-mono text-sm">muestreo.R</span>
+              </div>
+              <button onClick={handleCopyR} className="text-xs font-medium text-gray-300 hover:text-white bg-gray-700 px-3 py-1.5 rounded">
+                {copied ? "Copiado" : "Copiar"}
+              </button>
+            </div>
+            <div className="p-6 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed text-gray-300"><code>{rCode}</code></pre>
+            </div>
+          </div>
+        </div>
+        )}
     </div>
   );
 }
