@@ -115,7 +115,8 @@ cat(sprintf("Valor p: %.4f\\n", p))
 if (p < 0.05) {
     print("Hay relación significativa (Dependencia)")
 } else {
-    print("Son independientes")`;
+    print("Son independientes")
+}`;
 
   const handleCopyR = () => {
     navigator.clipboard.writeText(rCode);

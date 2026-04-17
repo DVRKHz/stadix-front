@@ -183,7 +183,9 @@ p_val3  <- summary(prueba3)[[1]][["Pr(>F)"]][1]
 cat(sprintf("Valor P: %f\n", p_val3))
 
 if (p_val3 < 0.05) {
-    print("Rechazamos H0 (Diferencia Significativa)")`;
+    print("Rechazamos H0 (Diferencia Significativa)")
+}
+    `;
 
   const handleCopyR = () => {
     navigator.clipboard.writeText(rCode);

@@ -8,22 +8,22 @@ export default function VariablesPage() {
   const [copied, setCopied] = useState(false);
 
   // El código didáctico que mostraremos
-    const pythonCode = `# Ejemplo básico: Determinar el tipo de dato de una sola variable
+const pythonCode = `# Ejemplo básico: Determinar el tipo de dato de una sola variable
 
-    dato = 10.5  # Prueba cambiando esto por "Hola" o 5
+dato = 10.5  # Prueba cambiando esto por "Hola" o 5
 
-    # 1. Verificamos el tipo de dato nativo de Python
-    tipo = type(dato)
+# 1. Verificamos el tipo de dato nativo de Python
+tipo = type(dato)
 
-    if tipo == str:
-        print("Es Cualitativa (Texto)")
+if tipo == str:
+    print("Es Cualitativa (Texto)")
 
-    elif tipo == int:
-        print("Es Cuantitativa Discreta (Número Entero)")
+elif tipo == int:
+    print("Es Cuantitativa Discreta (Número Entero)")
 
-    elif tipo == float:
-        print("Es Cuantitativa Continua (Número Decimal)")
-    `;
+elif tipo == float:
+    print("Es Cuantitativa Continua (Número Decimal)")
+  `;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(pythonCode);
@@ -33,20 +33,21 @@ export default function VariablesPage() {
 
     const rCode = `# Ejemplo básico: Determinar el tipo de dato de una sola variable
 
-    dato <- 10.5  # En R usamos <- para asignar, aunque = también funciona
+dato <- 10.5  # En R usamos <- para asignar, aunque = también funciona
 
-    # 1. Verificamos la clase del objeto
-    tipo <- class(dato)
+# 1. Verificamos la clase del objeto
+tipo <- class(dato)
 
-    if (tipo == "character") {
-        print("Es Cualitativa (Texto)")
+if (tipo == "character") {
+    print("Es Cualitativa (Texto)")
     
-    } else if (tipo == "integer") {
-        print("Es Cuantitativa Discreta (Número Entero)")
+} else if (tipo == "integer") {
+    print("Es Cuantitativa Discreta (Número Entero)")
     
-    } else if (tipo == "numeric") {
-        print("Es Cuantitativa Continua (Número Decimal)")
-      `;
+} else if (tipo == "numeric") {
+    print("Es Cuantitativa Continua (Número Decimal)")
+}
+  `;
 
   const handleCopyR = () => {
     navigator.clipboard.writeText(rCode);
