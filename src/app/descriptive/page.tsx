@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 
 import { PDFDownloadLink } from '@react-pdf/renderer';

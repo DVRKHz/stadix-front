@@ -73,9 +73,6 @@ export default function VariableAnalyzer() {
               <span className={`text-3xl font-black ${result.variable_type === 'quantitative' ? 'text-green-600' : 'text-purple-600'}`}>
                 {result.variable_type === 'quantitative' ? 'Cuantitativa' : 'Cualitativa'}
               </span>
-              <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-medium border border-gray-200">
-                {result.variable_subtype}
-              </span>
             </div>
             
             <div className="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
