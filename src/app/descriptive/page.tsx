@@ -18,6 +18,7 @@ export default function DescriptivePage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [inputMode, setInputMode] = useState<'manual' | 'file'>('manual');
+  const [isPopulation, setIsPopulation] = useState(false); // False = Muestra (por defecto)
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const [reportImage, setReportImage] = useState<string>("");
@@ -46,7 +47,10 @@ export default function DescriptivePage() {
       const res = await fetch(`${API_URL}/api/v1/descriptive/basic`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sample_data: dataArray })
+        body: JSON.stringify({ 
+          sample_data: dataArray,
+          is_population: isPopulation 
+        })
       });
       if (res.ok) setStats(await res.json());
     } catch (e) { console.error(e); }
@@ -173,29 +177,35 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
             </p>
 
             <div className="space-y-4">
-              {/* Varianza y Desviación */}
+              {/* Varianzas y Desviación */}
               <div className="grid md:grid-cols-2 gap-4">
-                 <div className="bg-green-50 p-4 rounded-xl border border-green-100">
-                    <strong className="block text-green-800 mb-1">Varianza Muestral (<InlineMath math="s^2" />)</strong>
-                    <p className="text-xs text-gray-500 mb-2">Promedio de las desviaciones al cuadrado.</p>
-                    <BlockMath math="s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1}" />
-                 </div>
-                 <div className="bg-green-50 p-4 rounded-xl border border-green-100">
-                    <strong className="block text-green-800 mb-1">Desviación Estándar (<InlineMath math="s" />)</strong>
-                    <p className="text-xs text-gray-500 mb-2">Raíz cuadrada de la varianza.</p>
-                    <BlockMath math="s = \sqrt{s^2}" />
-                 </div>
+                <div className={`bg-green-50 p-4 rounded-xl border transition-all ${isPopulation ? 'border-blue-500 ring-2 ring-blue-200' : 'border-green-100'}`}>
+                  <strong className="block text-green-800 mb-1 text-center">Varianza Poblacional</strong>
+                  <BlockMath math="\sigma^2 = \frac{\sum (x_i - \mu)^2}{N}" />
+                </div>
+      
+                <div className={`bg-green-50 p-4 rounded-xl border transition-all ${!isPopulation ? 'border-blue-500 ring-2 ring-blue-200' : 'border-green-100'}`}>
+                  <strong className="block text-green-800 mb-1">Varianza Muestral</strong>
+                  <p className="text-xs text-gray-500 mb-2">Estimación basada en una muestra (n - 1).</p>
+                  <BlockMath math="s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1}" />
+                </div>
+
+                <div className="md:col-span-2 bg-green-50 p-4 rounded-xl border border-green-100">
+                  <strong className="block text-green-800 mb-1">Desviación Estándar (<InlineMath math="\sigma \text{ o } s" />)</strong>
+                  <p className="text-xs text-gray-500 mb-2">Raíz cuadrada de la varianza (indica la dispersión en las unidades originales).</p>
+                  <BlockMath math="\sigma = \sqrt{\sigma^2} \quad \text{o} \quad s = \sqrt{s^2}" />
+                </div>
               </div>
 
               {/* Coeficiente de Variación */}
               <div className="bg-purple-50 p-4 rounded-xl border border-purple-100 flex items-center justify-between">
-                 <div>
-                    <strong className="block text-purple-800">Coeficiente de Variación (CV)</strong>
-                    <p className="text-xs text-gray-500 mt-1">Medida porcentual relativa de dispersión.</p>
-                 </div>
-                 <div className="bg-white px-6 py-2 rounded-lg shadow-sm">
-                    <BlockMath math="CV = \frac{s}{|\bar{x}|} \times 100\%" />
-                 </div>
+                <div>
+                  <strong className="block text-purple-800">Coeficiente de Variación (CV)</strong>
+                  <p className="text-xs text-gray-500 mt-1">Medida porcentual relativa de dispersión.</p>
+                </div>
+                <div className="bg-white px-6 py-2 rounded-lg shadow-sm">
+                  <BlockMath math="CV = \frac{s}{|\bar{x}|} \times 100\%" />
+                </div>
               </div>
             </div>
           </section>
@@ -246,6 +256,21 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
                 </div>
             </div>
 
+            {/* Selector de Población vs Muestra */}
+            <div className="flex items-center justify-center gap-4 mb-6 p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <span className={`text-sm font-bold ${!isPopulation ? 'text-blue-600' : 'text-gray-400'}`}>Muestra (n-1)</span>
+  
+              <button 
+                onClick={() => setIsPopulation(!isPopulation)}
+                className="relative w-12 h-6 bg-gray-300 rounded-full transition-colors focus:outline-none"
+              >
+                <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${isPopulation ? 'translate-x-6 bg-blue-600' : ''}`} />
+                <div className={`w-full h-full rounded-full ${isPopulation ? 'bg-blue-500' : 'bg-gray-300'}`} />
+              </button>
+
+              <span className={`text-sm font-bold ${isPopulation ? 'text-blue-600' : 'text-gray-400'}`}>Población (N)</span>
+            </div>
+
             {/* Opción A: Manual */}
             {inputMode === 'manual' && (
                 <div className="animate-fade-in">
@@ -286,7 +311,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
                             formData.append("file", file);
 
                             try {
-                                const res = await fetch(`${API_URL}/api/v1/descriptive/upload`, {
+                                const res = await fetch(`${API_URL}/api/v1/descriptive/upload?is_population=${isPopulation}`, {
                                     method: "POST",
                                     body: formData, // Enviamos el archivo crudo
                                 });
