@@ -298,7 +298,17 @@ barplot(tabla, main = "Gráfico de Barras", col = "skyblue")`;
                         </ComposedChart>
                       ) : (
                         <PieChart>
-                          <Pie data={stats.frequency_table} dataKey="absolute_freq" nameKey="class_mark" cx="50%" cy="50%" outerRadius={100} label isAnimationActive={false}>
+                          <Pie
+                            data={stats.frequency_table}
+                            dataKey="percentage" // Usamos el porcentaje como valor
+                            nameKey="class_mark"
+                            cx="50%" cy="50%" 
+                            outerRadius={100} 
+                            fill="#8884d8" 
+                            isAnimationActive={false}
+                            // MODIFICACIÓN AQUÍ: Función para mostrar solo el valor hi% en el perímetro
+                            label={({ value }) => `${value}%`} 
+                          >
                             {stats.frequency_table.map((_: any, index: number) => (
                               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}

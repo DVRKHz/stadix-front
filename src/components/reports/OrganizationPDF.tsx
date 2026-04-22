@@ -52,19 +52,21 @@ const styles = StyleSheet.create({
     borderBottomColor: '#bfdbfe',
   },
   tableColHeader: {
-    width: '25%',
+    width: '20%', 
     backgroundColor: '#1e40af',
     color: '#ffffff',
     padding: 5,
     textAlign: 'center',
     fontWeight: 'bold',
+    fontSize: 8.5, // Reducido un poco para evitar desbordamiento
   },
   tableCol: {
-    width: '25%',
+    width: '20%',
     padding: 5,
     textAlign: 'center',
     borderRightWidth: 1,
     borderRightColor: '#bfdbfe',
+    fontSize: 9,
   },
   rowCharts: {
     flexDirection: 'row',
@@ -88,9 +90,8 @@ const styles = StyleSheet.create({
   chartImageSide: {
     width: '100%',
     height: 120,
-    objectFit: 'contain', // Mantiene proporción en barras y líneas
+    objectFit: 'contain',
   },
-  // CORRECCIÓN PARA EL GRÁFICO CIRCULAR
   pieWrapper: {
     borderWidth: 1,
     borderColor: '#e5e7eb',
@@ -99,9 +100,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   chartImagePie: {
-    width: '80%',      // No ocupa todo el ancho para evitar deformación
-    height: 160,       // Altura fija controlada
-    objectFit: 'contain', // ESTA ES LA CLAVE: No estira la imagen
+    width: '80%',
+    height: 160,
+    objectFit: 'contain',
   },
   footer: {
     position: 'absolute',
@@ -132,6 +133,7 @@ export const OrganizationPDF = ({ data, images }: OrganizationPDFProps) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* Encabezado */}
         <View style={styles.header}>
           <Text style={{ fontSize: 10, color: '#1e3a8a', fontWeight: 'bold' }}>UNACH | STADIX</Text>
           <View style={styles.titleContainer}>
@@ -140,18 +142,22 @@ export const OrganizationPDF = ({ data, images }: OrganizationPDFProps) => {
           </View>
         </View>
 
+        {/* 1. TABLA DE FRECUENCIAS */}
         <View>
           <Text style={styles.sectionTitle}>1. Tabla de Frecuencias</Text>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>Clase</Text>
-              <Text style={styles.tableColHeader}>fi</Text>
-              <Text style={styles.tableColHeader}>hi (%)</Text>
-              <Text style={styles.tableColHeader}>Fi</Text>
+              {/* xi ahora a la derecha de Clase */}
+              <Text style={styles.tableColHeader}>Punto Medio (xi)</Text> 
+              <Text style={styles.tableColHeader}>Absoluta (fi)</Text>
+              <Text style={styles.tableColHeader}>Relativa (hi %)</Text>
+              <Text style={styles.tableColHeader}>Acumulada (Fi)</Text>
             </View>
             {data.frequency_table.map((row: any, i: number) => (
               <View key={i} style={styles.tableRow}>
                 <Text style={styles.tableCol}>{row.lower_limit} - {row.upper_limit}</Text>
+                <Text style={styles.tableCol}>{row.class_mark}</Text>
                 <Text style={styles.tableCol}>{row.absolute_freq}</Text>
                 <Text style={styles.tableCol}>{row.percentage}%</Text>
                 <Text style={styles.tableCol}>{row.cumulative_freq}</Text>
@@ -160,22 +166,21 @@ export const OrganizationPDF = ({ data, images }: OrganizationPDFProps) => {
           </View>
         </View>
 
+        {/* 2. ANÁLISIS GRÁFICO */}
         <View>
           <Text style={styles.sectionTitle}>2. Análisis Gráfico</Text>
-          
-          {/* Gráficos en paralelo */}
           <View style={styles.rowCharts}>
             <View style={styles.chartWrapper}>
-              <Text style={styles.chartLabel}>Histograma (Barras)</Text>
+              <Text style={styles.chartLabel}>Histograma (Frecuencia absoluta)</Text>
               {images.bar && <Image src={images.bar} style={styles.chartImageSide} />}
             </View>
             <View style={styles.chartWrapper}>
-              <Text style={styles.chartLabel}>Polígono (Líneas)</Text>
+              <Text style={styles.chartLabel}>Polígono (Frecuencia absoluta)</Text>
               {images.line && <Image src={images.line} style={styles.chartImageSide} />}
             </View>
           </View>
 
-          {/* Gráfico Circular centrado y sin estirar */}
+          {/* Gráfico Circular con hi % en perímetro (según lógica de la Página) */}
           <View style={styles.pieWrapper}>
             <Text style={styles.chartLabel}>Distribución Porcentual (Circular)</Text>
             {images.pie && (
