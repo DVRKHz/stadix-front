@@ -308,7 +308,7 @@ if (p_val3 < 0.05) {
                                                     q1: { fill: "#3b82f6", fillOpacity: 0.4 },
                                                     q3: { fill: "#3b82f6", fillOpacity: 0.4 },
                                                     median: { stroke: "#1e40af", strokeWidth: 2 },
-                                                    whisker: { stroke: "#3b82f6", strokeDasharray: "4, 4" }
+                                                    whiskers: { stroke: "#3b82f6", strokeDasharray: "4, 4" }
                                                 }}
                                                 labels
                                                 labelComponent={<VictoryTooltip />}
