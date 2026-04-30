@@ -182,7 +182,7 @@ export const OrganizationPDF = ({ data, images }: OrganizationPDFProps) => {
 
           {/* Gráfico Circular con hi % en perímetro (según lógica de la Página) */}
           <View style={styles.pieWrapper}>
-            <Text style={styles.chartLabel}>Distribución Porcentual (Circular)</Text>
+            <Text style={styles.chartLabel}>Circular (Frecuencia relativa)</Text>
             {images.pie && (
               <Image 
                 src={images.pie} 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { 
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine 
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Line, ComposedChart 
 } from 'recharts';
 
 import { API_URL } from '@/config/api';
@@ -82,6 +82,23 @@ export default function InferencialPage() {
 
   // Preparar datos para el gráfico
   const chartData = result ? result.rawX.map((x: number, i: number) => ({ x, y: result.rawY[i] })) : [];
+
+  const n = chartData.length;
+  const sumX = chartData.reduce((acc, val) => acc + val.x, 0);
+  const sumY = chartData.reduce((acc, val) => acc + val.y, 0);
+  const sumXY = chartData.reduce((acc, val) => acc + (val.x * val.y), 0);
+  const sumX2 = chartData.reduce((acc, val) => acc + (val.x * val.x), 0);
+
+  const m = (n * sumXY - sumX * sumY) / (n * sumX2 -sumX * sumX);
+  const b = (sumY - m * sumX) / n;
+
+  const minX = Math.min(...chartData.map(d => d.x));
+  const maxX = Math.max(...chartData.map(d => d.x));
+
+  const trendLineData = [
+    { x: minX, y: m * minX + b },
+    { x: maxX, y: m * maxX + b }
+  ];
 
   const pythonCode = `# Regresión Lineal con Scipy
 from scipy import stats
@@ -198,6 +215,25 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
                     <li><InlineMath math="r=0" />: Sin relación lineal.</li>
                     <li><InlineMath math="r=-1" />: Correlación Negativa Perfecta.</li>
                 </ul>
+             </section>
+             {/* 4.4 Gráfico de Dispersión */}
+             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                 <h3 className="font-bold text-gray-800 mb-2">4.4 Gráfico de Dispersión (Scatter Plot)</h3>
+                 <p className="text-xs text-gray-500 mb-3">Representación visual de la relación entre dos variables.</p>
+    
+                 {/* Visualización del concepto */}
+                 <div className="mb-4">
+        
+                 </div>
+
+                 <div className="bg-gray-50 p-3 rounded text-[10px] text-gray-600">
+                     <p>El gráfico permite observar el comportamiento de los datos:</p>
+                     <ul className="list-disc pl-4 mt-2 space-y-1">
+                         <li><strong>Tendencia:</strong> Identifica si a mayor X, mayor o menor Y.</li>
+                         <li><strong>Fuerza:</strong> La cercanía de los puntos a una línea imaginaria.</li>
+                         <li><strong>Atípicos:</strong> Puntos aislados que se alejan del patrón general.</li>
+                     </ul>
+                 </div>
              </section>
           </div>
         </div>
@@ -391,13 +427,26 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
                         <h4 className="font-bold text-gray-700 mb-4">Gráfico de Dispersión + Línea de Ajuste</h4>
                         <div className="h-64 w-full">
                             <ResponsiveContainer width="100%" height="100%">
-                                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                                    <CartesianGrid />
-                                    <XAxis type="number" dataKey="x" name="Variable X" />
-                                    <YAxis type="number" dataKey="y" name="Variable Y" />
-                                    {/* Nota: En el PDF, el Tooltip no sale, pero la gráfica sí */}
+                                {/* Usamos ComposedChart para permitir mezclar Scatter y Line fácilmente */}
+                                <ComposedChart data={chartData} margin={{ top: 20, right: 20, bottom: 20, left: 20}}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis type="number" dataKey="x" name="Variable X" unit="" />
+                                    <YAxis type="number" dataKey="y" name="Variable Y" unit="" />
+
+                                    {/* La línea de tendencia */}
+                                    <Line
+                                        data={trendLineData}
+                                        type="monotone"
+                                        dataKey="y"
+                                        stroke="#ef4444" // Color rojo para contraste
+                                        dot={false}
+                                        legendType="none"
+                                        strokeWidth={2}
+                                    />
+
+                                    {/* Los puntos de dispersión */}
                                     <Scatter name="Datos" data={chartData} fill="#2563eb" />
-                                </ScatterChart>
+                                </ComposedChart>    
                             </ResponsiveContainer>
                         </div>
                         <p className="text-xs text-center text-gray-400 mt-2">
