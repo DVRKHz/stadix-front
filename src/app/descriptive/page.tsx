@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { InlineMath, BlockMath } from 'react-katex';
-
+import 'katex/dist/katex.min.css';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { DescriptivePDF } from '@/components/reports/DescriptivePDF';
 import { toPng } from 'html-to-image';
@@ -142,7 +142,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
                 <strong className="block text-blue-800 mb-2">Media (<InlineMath math="\bar{x}" />)</strong>
                 <p className="text-xs text-gray-600 mb-2">El promedio aritmético de los datos.</p>
                 <div className="text-blue-900 py-2">
-                  <BlockMath math="\bar{x} = \frac{\sum x_i}{n}" />
+                  <BlockMath math="\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}" />
                 </div>
               </div>
 
