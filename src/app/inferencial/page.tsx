@@ -84,16 +84,16 @@ export default function InferencialPage() {
   const chartData = result ? result.rawX.map((x: number, i: number) => ({ x, y: result.rawY[i] })) : [];
 
   const n = chartData.length;
-  const sumX = chartData.reduce((acc, val) => acc + val.x, 0);
-  const sumY = chartData.reduce((acc, val) => acc + val.y, 0);
-  const sumXY = chartData.reduce((acc, val) => acc + (val.x * val.y), 0);
-  const sumX2 = chartData.reduce((acc, val) => acc + (val.x * val.x), 0);
+  const sumX = chartData.reduce((acc: number, val: any) => acc + val.x, 0);
+  const sumY = chartData.reduce((acc: number, val: any) => acc + val.y, 0);
+  const sumXY = chartData.reduce((acc: number, val: any) => acc + (val.x * val.y), 0);
+  const sumX2 = chartData.reduce((acc: number, val: any) => acc + (val.x * val.x), 0);
 
   const m = (n * sumXY - sumX * sumY) / (n * sumX2 -sumX * sumX);
   const b = (sumY - m * sumX) / n;
 
-  const minX = Math.min(...chartData.map(d => d.x));
-  const maxX = Math.max(...chartData.map(d => d.x));
+  const minX = Math.min(...chartData.map((d: { x: number }) => d.x));
+  const maxX = Math.max(...chartData.map((d: { x: number }) => d.x));
 
   const trendLineData = [
     { x: minX, y: m * minX + b },
