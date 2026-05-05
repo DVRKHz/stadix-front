@@ -180,12 +180,26 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
                 la mayoría de los datos están cerca del promedio (el centro de la campana), y pocos están en los extremos.
              </p>
              <div className="bg-blue-50 p-4 rounded-xl">
-                <ul className="grid md:grid-cols-2 gap-4 text-sm text-blue-800">
-                    <li className="flex gap-2">✅ <strong>Simetría:</strong> La media, mediana y moda coinciden en el centro.</li>
-                    <li className="flex gap-2">
-                        ✅ <strong>Regla 68-95-99:</strong> El 95% de los datos está a menos de 2 desviaciones estándar (<InlineMath math="\pm 2\sigma" />) de la media.
-                    </li>
-                </ul>
+             <ul className="grid md:grid-cols-1 gap-4 text-sm text-blue-800">
+               {/* Punto de Simetría */}
+               <li className="flex gap-2">
+                 <span>✅</span>
+                 <span><strong>Simetría:</strong> La media, mediana y moda coinciden en el centro de la distribución.</span>
+               </li>
+
+               {/* Regla Empírica */}
+               <li className="flex gap-2">
+                 <span>✅</span>
+                 <div className="flex flex-col">
+                   <strong>Regla Empírica (68-95-99.7):</strong>
+                   <ul className="mt-2 space-y-1 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                     <li>• El <strong>68%</strong> de los datos está a ±1σ de la media.</li>
+                     <li>• El <strong>95%</strong> de los datos está a ±2σ de la media.</li>
+                     <li>• El <strong>99.7%</strong> de los datos está a ±3σ de la media.</li>
+                   </ul>
+                 </div>
+               </li>
+             </ul>
              </div>
           </section>
 
@@ -234,6 +248,28 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
                          <li><strong>Atípicos:</strong> Puntos aislados que se alejan del patrón general.</li>
                      </ul>
                  </div>
+             </section>
+            {/* 4.4 Covarianza */}
+            <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">4.4 Covarianza</h3>
+                <p className="text-xs text-gray-500 mb-3">Medida que indica el grado de variación conjunta de dos variables aleatorias.</p>
+                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
+                    <BlockMath math="Cov(X, Y) = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n}" />
+                    <p className="text-[10px] mt-1 text-gray-400">
+                        Donde <InlineMath math="\bar{x}" /> y <InlineMath math="\bar{y}" /> son las medias de cada variable.
+                    </p>
+                </div>
+            </section>
+            {/* 4.5 Coeficiente de Determinación */}
+             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">4.5 Coeficiente de Determinación (R²)</h3>
+                <p className="text-xs text-gray-500 mb-3">Indica la proporción de la varianza total de la variable dependiente explicada por el modelo.</p>
+                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
+                    <BlockMath math="R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}" />
+                    <p className="text-[10px] mt-1 text-gray-400">
+                        Donde <InlineMath math="\hat{y}_i" /> son los valores predichos y <InlineMath math="\bar{y}" /> el promedio real.
+                    </p>
+                </div>
              </section>
           </div>
         </div>
