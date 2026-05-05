@@ -77,11 +77,11 @@ export default function HypothesisPage() {
       if (!result || testType !== 'anova') return [];
       return result.group_means.map((m: number, i: number) => ({
           x: `G${i+1}`,
-          min: m * 0.8,
-          q1: m * 0.9,
-          median: m,
-          q3: m * 1.1,
-          max: m * 1.2
+          min: Number((m * 0.8).toFixed(2)),
+          q1: Number((m * 0.9).toFixed(2)),
+          median: Number(m.toFixed(2)),
+          q3: Number((m * 1.1).toFixed(2)),
+          max: Number((m * 1.2).toFixed(2))
       }));
   };
 
@@ -296,7 +296,7 @@ if (p_val3 < 0.05) {
 
                                 <div className="h-64 w-full mb-4 bg-gray-50 rounded-lg flex items-center justify-center">
                                     {testType === 'anova' ? (
-                                        <VictoryChart domainPadding={40} width={450} height={280} theme={VictoryTheme.material}>
+                                        <VictoryChart domainPadding={40} width={450} height={350} theme={VictoryTheme.material}>
                                             <VictoryAxis style={{ tickLabels: { fontSize: 10, fontWeight: 'bold' } }} />
                                             <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 8 } }} />
                                             <VictoryBoxPlot
@@ -308,10 +308,17 @@ if (p_val3 < 0.05) {
                                                     q1: { fill: "#3b82f6", fillOpacity: 0.4 },
                                                     q3: { fill: "#3b82f6", fillOpacity: 0.4 },
                                                     median: { stroke: "#1e40af", strokeWidth: 2 },
-                                                    whiskers: { stroke: "#3b82f6", strokeDasharray: "4, 4" }
+                                                    whiskers: { stroke: "#3b82f6", strokeDasharray: "4, 4" },
+                                                    labels: { 
+                                                        fontSize: 8, 
+                                                        fill: "#374151",
+                                                        fontWeight: "bold" 
+                                                    }
                                                 }}
                                                 labels
-                                                labelComponent={<VictoryTooltip />}
+                                                labelOrientation="right"
+                                                dy={0}
+                                                dx={10}
                                             />
                                         </VictoryChart>
                                     ) : (
