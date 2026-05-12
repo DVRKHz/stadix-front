@@ -130,10 +130,14 @@ export const HypothesisPDF = ({ data, testType, chartImage }: ReportProps) => {
         <Text style={styles.sectionTitle}>4. Interpretación de Resultados</Text>
         <View style={{ backgroundColor: '#f4f7fa', padding: 12, borderRadius: 4, borderLeftWidth: 2, borderLeftColor: '#0055aa' }}>
             <Text style={styles.text}>
-                {data.interpretation}
+                {data.p_value >= 0.05 ? (
+                    `Dado que el valor p (${data.p_value.toFixed(5)}) es mayor al nivel de significancia de alpha = 0.05, no rechazamos H0. Por lo tanto, no existe evidencia estadística para concluir que hay una diferencia significativa entre las medias de estos grupos.`
+                ) : (
+                    data.interpretation
+                )}
             </Text>
             <Text style={{ fontSize: 8, color: '#666', marginTop: 8, fontStyle: 'italic' }}>
-                Validado por el sistema STADIX. Este reporte considera un nivel de confianza estándar de 95% ($\alpha = 0.05$).
+                Validado por el sistema STADIX. Este reporte considera un nivel de confianza estándar de 95% (alpha = 0.05).
             </Text>
         </View>
 

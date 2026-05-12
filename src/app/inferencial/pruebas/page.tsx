@@ -6,10 +6,6 @@ import { InlineMath, BlockMath } from 'react-katex';
 
 // --- GRÁFICOS ---
 import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
-  ResponsiveContainer, Cell 
-} from 'recharts';
-import { 
   VictoryChart, VictoryBoxPlot, VictoryAxis, VictoryTheme, VictoryTooltip 
 } from 'victory';
 
@@ -72,18 +68,51 @@ export default function HypothesisPage() {
       return [];
   };
 
-  // Datos para Victory (ANOVA BoxPlot)
-  const getVictoryData = () => {
-      if (!result || testType !== 'anova') return [];
-      return result.group_means.map((m: number, i: number) => ({
-          x: `G${i+1}`,
-          min: Number((m * 0.8).toFixed(2)),
-          q1: Number((m * 0.9).toFixed(2)),
-          median: Number(m.toFixed(2)),
-          q3: Number((m * 1.1).toFixed(2)),
-          max: Number((m * 1.2).toFixed(2))
-      }));
-  };
+const getVictoryData = () => {
+    if (!result) return [];
+    
+    // Caso T-Student (1 Muestra)
+    if (testType === 't1') {
+        const m = result.sample_mean;
+        return [{
+            x: 'Muestra',
+            min: Number((m * 0.8).toFixed(2)),
+            q1: Number((m * 0.9).toFixed(2)),
+            median: Number(m.toFixed(2)),
+            q3: Number((m * 1.1).toFixed(2)),
+            max: Number((m * 1.2).toFixed(2)),
+            label: `Media: ${m.toFixed(2)}`
+        }];
+    }
+
+    // Caso T-Student (2 Muestras)
+    if (testType === 't2') {
+        return [
+            { m: result.mean_group1, label: 'G1' },
+            { m: result.mean_group2, label: 'G2' }
+        ].map(item => ({
+            x: item.label,
+            min: Number((item.m * 0.8).toFixed(2)),
+            q1: Number((item.m * 0.9).toFixed(2)),
+            median: Number(item.m.toFixed(2)),
+            q3: Number((item.m * 1.1).toFixed(2)),
+            max: Number((item.m * 1.2).toFixed(2))
+        }));
+    }
+
+    // Caso ANOVA (3 muestras)
+    if (testType === 'anova' && result.group_means) {
+        return result.group_means.map((m: number, i: number) => ({
+            x: `G${i+1}`,
+            min: Number((m * 0.8).toFixed(2)),
+            q1: Number((m * 0.9).toFixed(2)),
+            median: Number(m.toFixed(2)),
+            q3: Number((m * 1.1).toFixed(2)),
+            max: Number((m * 1.2).toFixed(2))
+        }));
+    }
+    return [];
+};
 
   const handleCalculate = async () => {
     setLoading(true);
@@ -295,44 +324,46 @@ if (p_val3 < 0.05) {
                                 </div>
 
                                 <div className="h-64 w-full mb-4 bg-gray-50 rounded-lg flex items-center justify-center">
-                                    {testType === 'anova' ? (
-                                        <VictoryChart domainPadding={40} width={450} height={350} theme={VictoryTheme.material}>
-                                            <VictoryAxis style={{ tickLabels: { fontSize: 10, fontWeight: 'bold' } }} />
-                                            <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 8 } }} />
-                                            <VictoryBoxPlot
-                                                data={getVictoryData()}
-                                                boxWidth={30}
-                                                style={{
-                                                    min: { stroke: "#3b82f6", strokeWidth: 2 },
-                                                    max: { stroke: "#3b82f6", strokeWidth: 2 },
-                                                    q1: { fill: "#3b82f6", fillOpacity: 0.4 },
-                                                    q3: { fill: "#3b82f6", fillOpacity: 0.4 },
-                                                    median: { stroke: "#1e40af", strokeWidth: 2 },
-                                                    whiskers: { stroke: "#3b82f6", strokeDasharray: "4, 4" }
-                                                }}
-                                                labels
-                                                labelOrientation="right"
-                                            />
-                                        </VictoryChart>
-                                    ) : (
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <BarChart data={getRechartsData()} layout="vertical" margin={{ left: 30, right: 30 }}>
-                                                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                                                <XAxis type="number" />
-                                                <YAxis dataKey="name" type="category" width={80} style={{ fontSize: '10px' }} />
-                                                <Tooltip cursor={{fill: 'transparent'}} />
-                                                <Bar dataKey="media" barSize={20}>
-                                                    {getRechartsData().map((entry: any, index: number) => (
-                                                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                                                    ))}
-                                                </Bar>
-                                            </BarChart>
-                                        </ResponsiveContainer>
-                                    )}
+                                    {/* NUEVO RENDERIZADO UNIFICADO */}
+                                    <VictoryChart 
+                                        domainPadding={{ x: testType === 't1' ? 150 : 50 }} 
+                                        width={450} 
+                                        height={350} 
+                                        theme={VictoryTheme.material}
+                                    >
+                                        <VictoryAxis style={{ tickLabels: { fontSize: 10, fontWeight: 'bold' } }} />
+                                        <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 8 } }} />
+                                        <VictoryBoxPlot
+                                            data={getVictoryData()}
+                                            boxWidth={30}
+                                            labels
+                                            labelOrientation="top"
+                                            style={{
+                                                min: { stroke: "#3b82f6", strokeWidth: 2 },
+                                                max: { stroke: "#3b82f6", strokeWidth: 2 },
+                                                q1: { fill: "#3b82f6", fillOpacity: 0.4 },
+                                                q3: { fill: "#3b82f6", fillOpacity: 0.4 },
+                                                median: { stroke: "#1e40af", strokeWidth: 2 },
+                                                whiskers: { stroke: "#3b82f6", strokeDasharray: "4, 4" },
+                                                q1Labels: { fontSize: 10, fontWeight: 'bold', fill: "#1e40af" },
+                                                q3Labels: { fontSize: 10, fontWeight: 'bold', fill: "#1e40af" },
+                                                medianLabels: { fontSize: 10, fontWeight: 'bold', fill: "#1e40af" },
+                                                minLabels: { fontSize: 10, fontWeight: 'bold', fill: "#1e40af" },
+                                                maxLabels: { fontSize: 10, fontWeight: 'bold', fill: "#1e40af" },
+                                            }}
+                                        />
+                                    </VictoryChart>
                                 </div>
 
                                 <div className={`p-3 rounded-lg text-center text-sm font-bold ${result.p_value < 0.05 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                                    {result.interpretation}
+                                    {result.p_value >= 0.05 ? (
+                                        <span>
+                                            Dado que el valor p (<span className="font-mono">{result.p_value.toFixed(5)}</span>) es mayor al nivel de significancia de <InlineMath math="\alpha = 0.05" />, no rechazamos <InlineMath math="H_0" />.
+                                            Por lo tanto, no existe evidencia estadística para concluir que hay una diferencia significativa entre las medias de estos grupos.
+                                        </span>
+                                    ) : (
+                                        result.interpretation
+                                    )}
                                 </div>
                             </div>
                         </div>
