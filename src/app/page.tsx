@@ -1,4 +1,5 @@
 import Link from "next/link";
+import VisitorCounter from "@/components/VisitorCounter"; // Componente para contar visitantes
 
 export default function Home() {
   
@@ -127,11 +128,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- FOOTER SIMPLE --- */}
-      <div className="text-center mt-20 text-slate-400 text-sm">
-        <p>© {new Date().getFullYear()} Universidad Autónoma de Chiapas - Proyecto Educativo. Desarrollado por Antonio E.P. Heredia y Jorge J.P. Heredia</p>
-        <p>Contribuciones por Rodrigo Martínez y Cristóbal Pérez.</p>
-      </div>
+      {/* --- FOOTER SECCIÓN MODIFICADA --- */}
+      <footer className="text-center mt-20 text-slate-400 text-sm flex flex-col items-center gap-3">
+        <div>
+          <p>© {new Date().getFullYear()} Universidad Autónoma de Chiapas - Proyecto Educativo. Desarrollado por Antonio E.P. Heredia y Jorge J.P. Heredia</p>
+          <p>Contribuciones por Rodrigo Martínez y Cristóbal Pérez.</p>
+        </div>
+        
+        {/* Contador integrado y centrado */}
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-xs text-slate-400/80">Estadísticas del sitio:</span>
+          <VisitorCounter />
+        </div>
+      </footer>
 
     </div>
   );
