@@ -1,5 +1,6 @@
 import Link from "next/link";
 import VisitorCounter from "@/components/VisitorCounter"; // Componente para contar visitantes
+import VisitsHeatmap from "@/components/VisitsHeatmap"; // Componente para el mapa de calor de visitas
 
 export default function Home() {
   
@@ -126,6 +127,12 @@ export default function Home() {
             </Link>
           ))}
         </div>
+      </div>
+
+      {/* --- MAPA DE CALOR DE VISITAS --- */}
+      {/* CORRECCIÓN: Renderizamos el componente aquí con espaciado superior consistente */}
+      <div className="mt-20 px-4">
+        <VisitsHeatmap />
       </div>
 
       {/* --- FOOTER SECCIÓN MODIFICADA --- */}

@@ -26,3 +26,32 @@ body {
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* --- CONFIGURACIÓN MINIMALISTA CLARA PARA EL MAPA --- */
+.root-heatmap .react-calendar-heatmap .color-empty {
+  fill: #f1f5f9; /* Tailwind slate-100: Gris claro impecable para los cuadros vacíos */
+}
+
+/* Escala de actividad en tonos Índigo */
+.root-heatmap .react-calendar-heatmap .color-scale-1 { fill: #c7d2fe; } /* indigo-200 */
+.root-heatmap .react-calendar-heatmap .color-scale-2 { fill: #93c5fd; } /* Transición suave a azul */
+.root-heatmap .react-calendar-heatmap .color-scale-3 { fill: #6366f1; } /* indigo-500 */
+.root-heatmap .react-calendar-heatmap .color-scale-4 { fill: #4338ca; } /* indigo-700 */
+
+/* Corrección de las etiquetas de texto de los meses */
+.root-heatmap .react-calendar-heatmap text {
+  fill: #475569; /* Tailwind slate-600: Gris oscuro con contraste ideal sobre fondo claro */
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Redondear las esquinas de los días estilo GitHub moderno */
+.root-heatmap .react-calendar-heatmap rect {
+  rx: 2.5px;
+  ry: 2.5px;
+  transition: fill 0.15s ease;
+}
+.root-heatmap .react-calendar-heatmap rect:hover {
+  stroke: #2563eb; /* Borde azul de enfoque */
+  stroke-width: 1px;
+}
