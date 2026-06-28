@@ -129,23 +129,126 @@ const handleCopyR = () => {
 
       {/* CONCEPTOS */}
       {activeTab === 'concepts' && (
-        <div className="space-y-6 animate-fade-in">
-            <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                <h3 className="text-lg font-bold text-blue-900 mb-3">¿Por qué calcular la muestra?</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                    Estudiar a toda una población (censo) suele ser imposible o muy costoso. El muestreo nos permite estudiar una parte representativa (<InlineMath math="n" />) para inferir conclusiones sobre el todo (<InlineMath math="N" />).
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg text-center">
-                        <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Población Infinita (o desconocida)</p>
-                        <BlockMath math="n = \frac{Z^2 p q}{e^2}" />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg text-center">
-                        <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Población Finita (conocida)</p>
-                        <BlockMath math="n = \frac{N Z^2 p q}{e^2(N-1) + Z^2 p q}" />
-                    </div>
+        <div className="space-y-8 animate-fade-in">
+          
+          {/* 1. Introducción y Fórmulas */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <h3 className="text-lg font-bold text-blue-900 mb-2 flex items-center gap-2">
+              <span>🎯</span> ¿Por qué calcular el tamaño de muestra?
+            </h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Estudiar a toda una población (hacer un censo) casi siempre es imposible de hacer, ya sea por dinero o tiempo. El muestreo nos permite entrevistar solo a una fracción (<InlineMath math="n" />) para obtener conclusiones científicamente válidas sobre la población total (<InlineMath math="N" />).
+            </p>
+
+            {/* Diccionario de símbolos con InlineMath */}
+            <div className="bg-slate-900 text-slate-200 p-5 rounded-xl mb-6 shadow-md">
+              <p className="font-bold text-amber-400 mb-3 text-xs uppercase tracking-wider flex items-center gap-2">
+                <span>📖</span> Diccionario para fórmulas de muestreo:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+                <div><span className="text-blue-400 font-bold"><InlineMath math="n" /></span> = Tamaño de muestra (El resultado)</div>
+                <div><span className="text-green-400 font-bold"><InlineMath math="N" /></span> = Población total (El universo)</div>
+                <div><span className="text-yellow-400 font-bold"><InlineMath math="Z" /></span> = Nivel de confianza (Estándar: <InlineMath math="1.96" />)</div>
+                <div><span className="text-purple-400 font-bold"><InlineMath math="p" /></span> = Prob. de éxito (Estándar: <InlineMath math="0.5" />)</div>
+                <div><span className="text-pink-400 font-bold"><InlineMath math="q" /></span> = Prob. de fracaso (<InlineMath math="1 - p = 0.5" />)</div>
+                <div><span className="text-orange-400 font-bold"><InlineMath math="e" /></span> = Error máximo aceptado (Ej. <InlineMath math="0.05" />)</div>
+              </div>
+            </div>
+
+            {/* Las dos fórmulas */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 text-center flex flex-col justify-between">
+                <div>
+                  <p className="text-xs font-bold text-blue-900 mb-1 uppercase tracking-wide">Población Infinita (Desconocida)</p>
+                  <p className="text-[11px] text-gray-500 mb-3">Cuando no existe una lista total de sujetos (ej. conteo de turistas que visitan el parque central al año).</p>
                 </div>
-            </section>
+                <div className="bg-white py-2 rounded shadow-sm text-blue-900">
+                  <BlockMath math="n = \frac{Z^2 p q}{e^2}" />
+                </div>
+              </div>
+
+              <div className="bg-green-50/50 p-5 rounded-xl border border-green-100 text-center flex flex-col justify-between">
+                <div>
+                  <p className="text-xs font-bold text-green-900 mb-1 uppercase tracking-wide">Población Finita (Conocida)</p>
+                  <p className="text-[11px] text-gray-500 mb-3">Cuando sabes exactamente cuántos sujetos son en total (ej. los 30,000 alumnos de la UNACH).</p>
+                </div>
+                <div className="bg-white py-2 rounded shadow-sm text-green-900">
+                  <BlockMath math="n = \frac{N Z^2 p q}{e^2(N-1) + Z^2 p q}" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 2. Cuadro comparativo: Tipos de Muestreo */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+            <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <span>📋</span> Clasificación de los Tipos de Muestreo
+            </h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Una vez que la fórmula te dice cuántos sujetos necesitas, debes decidir a quiénes elegir. Existen dos grandes caminos en la estadística:
+            </p>
+
+            <div className="overflow-x-auto border border-gray-200 rounded-xl">
+              <table className="w-full text-left text-xs text-gray-600">
+                <thead className="bg-gray-100 text-gray-700 uppercase font-bold text-[10px]">
+                  <tr>
+                    <th className="p-3 border-b">Familia</th>
+                    <th className="p-3 border-b">Técnica</th>
+                    <th className="p-3 border-b">¿Cómo funciona?</th>
+                    <th className="p-3 border-b">Ejemplo</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  
+                  {/* Probabilísticos */}
+                  <tr className="bg-blue-50/20">
+                    <td className="p-3 font-bold text-blue-800 border-r border-gray-100" rowSpan={4}>
+                      Probabilístico<br/><span className="text-[9px] font-normal text-gray-400 block mt-1">Todos tienen la misma probabilidad de salir</span>
+                    </td>
+                    <td className="p-3 font-bold text-gray-800">Aleatorio Simple</td>
+                    <td className="p-3">Es una tómbola. Le asignas un número a cada sujeto y rifas quién entra.</td>
+                    <td className="p-3 italic text-gray-500">Rifar matrículas de la UNACH en Excel usando la función ALEATORIO().</td>
+                  </tr>
+                  <tr className="bg-blue-50/20">
+                    <td className="p-3 font-bold text-gray-800">Sistemático</td>
+                    <td className="p-3">Eliges un punto al azar y vas dando saltos fijos de tamaño <InlineMath math="k" />.</td>
+                    <td className="p-3 italic text-gray-500">Pararte en la entrada de la facultad y encuestar a cada 10° alumno que pase.</td>
+                  </tr>
+                  <tr className="bg-blue-50/20">
+                    <td className="p-3 font-bold text-gray-800">Estratificado</td>
+                    <td className="p-3">Divides en subgrupos naturales (estratos) y sacas una muestra proporcional de cada uno.</td>
+                    <td className="p-3 italic text-gray-500">Encuestar alumnos garantizando 20% de Medicina, 20% de Ingeniería, etc.</td>
+                  </tr>
+                  <tr className="bg-blue-50/20">
+                    <td className="p-3 font-bold text-gray-800">Por Conglomerados</td>
+                    <td className="p-3">La población ya viene en bloques. Eliges bloques al azar y estudias a todos adentro.</td>
+                    <td className="p-3 italic text-gray-500">Rifar 4 salones completos de la prepa y encuestar a absolutamente todos sus alumnos.</td>
+                  </tr>
+
+                  {/* No probabilísticos */}
+                  <tr className="bg-amber-50/10">
+                    <td className="p-3 font-bold text-amber-800 border-r border-gray-100" rowSpan={2}>
+                      No Probabilístico<br/><span className="text-[9px] font-normal text-gray-400 block mt-1">Selección a criterio del investigador</span>
+                    </td>
+                    <td className="p-3 font-bold text-gray-800">Por Conveniencia</td>
+                    <td className="p-3">Entrevistas a los sujetos que tienes más accesibles o cerca de ti.</td>
+                    <td className="p-3 italic text-gray-500">Hacer tu encuesta de tesis mandando el formulario únicamente a tus grupos de WhatsApp.</td>
+                  </tr>
+                  <tr className="bg-amber-50/10">
+                    <td className="p-3 font-bold text-gray-800">Bola de Nieve</td>
+                    <td className="p-3">Un sujeto que encuentras te lleva a otro con sus mismas características.</td>
+                    <td className="p-3 italic text-gray-500">Buscar pacientes con una enfermedad rara en Tuxtla; uno te da el teléfono del siguiente.</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            
+            <p className="text-[10px] text-gray-400 mt-3 text-right italic">
+              *Nota pedagógica: En estadística estricta, solo el muestreo probabilístico permite calcular márgenes de error reales.
+            </p>
+          </section>
+
         </div>
       )}
 
