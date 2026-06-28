@@ -23,12 +23,12 @@ const menuStructure = [
     icon: "📊",
   },
   {
-    title: "Descriptiva",
+    title: "Estadística Descriptiva",
     path: "/descriptive",
     icon: "∑",
   },
   {
-    title: "Inferencial",
+    title: "Estadística Inferencial",
     path: "/inferencial",
     icon: "🔮",
     submenu: [
@@ -139,27 +139,58 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      {/* Footer con SEGUNDO LOGO */}
-      <div className="absolute bottom-0 w-full border-t border-gray-100 bg-gray-50 flex items-center justify-center h-20">
+      {/* Footer con LOGOS INSTITUCIONALES (UNACH y CEDES) */}
+      <div className="absolute bottom-0 w-full border-t border-gray-100 bg-gray-50 flex items-center justify-center h-20 px-2">
         {isOpen ? (
-          /* Versión Expandida */
-          <div className="relative w-64 h-20 opacity-90 hover:opacity-100 transition-opacity">
-            <Image 
-              src="/Logo_de_la_UNACH.svg.png" 
-              alt="Logo Institucional" 
-              fill 
-              className="object-contain"
-            />
+          /* Versión Expandida: Ajuste de proporciones para compensar tamaños visuales */
+          <div className="flex items-center justify-between w-full h-14 px-1 gap-1">
+            
+            {/* Contenedor UNACH (42% del ancho disponible) */}
+            <div className="relative w-[42%] h-full opacity-90 hover:opacity-100 transition-opacity">
+              <Image 
+                src="/Logo_de_la_UNACH.svg.png" 
+                alt="Logo UNACH" 
+                fill 
+                sizes="(max-width: 768px) 100px, 150px"
+                className="object-contain"
+              />
+            </div>
+            
+            {/* Separador */}
+            <div className="h-8 w-[1px] bg-gray-200 flex-shrink-0" /> 
+            
+            {/* Contenedor CEDES (53% del ancho disponible para compensar sus márgenes internos) */}
+            <div className="relative w-[53%] h-full opacity-90 hover:opacity-100 transition-opacity">
+              <Image 
+                src="/logo-cedes.png" 
+                alt="Logo CEDES" 
+                fill 
+                sizes="(max-width: 768px) 120px, 170px"
+                className="object-contain"
+              />
+            </div>
           </div>
         ) : (
-          /* Versión Colapsada */
-          <div className="relative w-8 h-8 opacity-90">
-            <Image 
-              src="/Logo_de_la_UNACH.svg.png" 
-              alt="Logo Pie" 
-              fill 
-              className="object-contain"
-            />
+          /* Versión Colapsada: Logos ligeramente más grandes que antes (w-7 h-7) */
+          <div className="flex flex-col items-center justify-center gap-1.5 py-1">
+            <div className="relative w-7 h-7 opacity-90">
+              <Image 
+                src="/Logo_de_la_UNACH.svg.png" 
+                alt="Mini Logo UNACH" 
+                fill 
+                sizes="28px"
+                className="object-contain"
+              />
+            </div>
+            <div className="relative w-7 h-7 opacity-90">
+              <Image 
+                src="/logo-cedes.png" 
+                alt="Mini Logo CEDES" 
+                fill 
+                sizes="28px"
+                className="object-contain"
+              />
+            </div>
           </div>
         )}
       </div>

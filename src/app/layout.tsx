@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Estadística Didáctica",
+  title: "STADIX: Estadística Didáctica",
   description: "Plataforma educativa de análisis estadístico",
 };
 

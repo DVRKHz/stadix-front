@@ -149,8 +149,8 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">4. Estadística Inferencial</h1>
-        <p className="text-gray-500 mt-2">Buscando relaciones y haciendo predicciones (4.1 - 4.4).</p>
+        <h1 className="text-3xl font-extrabold text-gray-900">Estadística Inferencial</h1>
+        <p className="text-gray-500 mt-2">Buscando relaciones y haciendo predicciones.</p>
       </header>
 
       {/* Tabs */}
@@ -167,111 +167,160 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           
           {/* 4.0 Curva Normal */}
           <section className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-6 opacity-5 text-blue-900">
-                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M0 55 Q 25 55 35 30 T 50 5 T 65 30 T 100 55" />
-                </svg>
-             </div>
-             <h3 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
-                <span>🔔</span> 4.0 La Curva Normal (Distribución Gaussiana)
-             </h3>
-             <p className="text-gray-600 mb-4 max-w-3xl">
-                Es la base de la estadística inferencial. Describe cómo se distribuyen la mayoría de los fenómenos naturales: 
-                la mayoría de los datos están cerca del promedio (el centro de la campana), y pocos están en los extremos.
-             </p>
-             <div className="bg-blue-50 p-4 rounded-xl">
-             <ul className="grid md:grid-cols-1 gap-4 text-sm text-blue-800">
-               {/* Punto de Simetría */}
-               <li className="flex gap-2">
-                 <span>✅</span>
-                 <span><strong>Simetría:</strong> La media, mediana y moda coinciden en el centro de la distribución.</span>
-               </li>
+            <div className="absolute top-0 right-0 p-6 opacity-5 text-blue-900">
+              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M0 55 Q 25 55 35 30 T 50 5 T 65 30 T 100 55" />
+              </svg>
+            </div>
+  
+            <h3 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+              <span>🔔</span>La Curva Normal (Distribución Gaussiana)
+            </h3>
+  
+            <p className="text-gray-600 mb-6 max-w-3xl">
+              Es la base de la estadística inferencial. Describe cómo se distribuyen la mayoría de los fenómenos naturales: 
+              la mayoría de los datos están cerca del promedio (el centro de la campana), y pocos están en los extremos.
+            </p>
+  
+            <div className="bg-blue-50 p-5 rounded-xl">
+              <ul className="space-y-5 text-sm text-blue-800">
+                {/* Punto de Simetría */}
+                <li className="flex gap-2">
+                  <span className="shrink-0">✅</span>
+                  <span><strong>Simetría:</strong> La media, mediana y moda coinciden en el centro de la distribución.</span>
+                </li>
 
-               {/* Regla Empírica */}
-               <li className="flex gap-2">
-                 <span>✅</span>
-                 <div className="flex flex-col">
-                   <strong>Regla Empírica (68-95-99.7):</strong>
-                   <ul className="mt-2 space-y-1 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                     <li>• El <strong>68%</strong> de los datos está a ±1σ de la media.</li>
-                     <li>• El <strong>95%</strong> de los datos está a ±2σ de la media.</li>
-                     <li>• El <strong>99.7%</strong> de los datos está a ±3σ de la media.</li>
-                   </ul>
-                 </div>
-               </li>
-             </ul>
-             </div>
+                {/* Regla Empírica */}
+                <li className="flex gap-2">
+                  <span className="shrink-0">✅</span>
+                  <div className="flex flex-col w-full">
+                    <strong>Regla (68-95-99.7):</strong>
+          
+                    {/* Contenedor de 2 columnas para Texto + Imagen */}
+                    <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-white p-4 rounded-xl border border-blue-100/70 shadow-sm">
+            
+                      {/* Columna Izquierda: Los datos */}
+                      <ul className="space-y-2">
+                        <li className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full bg-blue-400"></span>
+                          <span>El <strong>68.2%</strong> de los datos está a ±1σ de la media.</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full bg-blue-500"></span>
+                          <span>El <strong>95.4%</strong> de los datos está a ±2σ de la media.</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full bg-blue-600"></span>
+                          <span>El <strong>99.7%</strong> de los datos está a ±3σ de la media.</span>
+                        </li>
+                      </ul>
+
+                      {/* Columna Derecha: La Imagen */}
+                      <div className="flex justify-center p-2 bg-blue-50/50 rounded-lg border border-dashed border-blue-200">
+                        <img 
+                          src="/distribucion-gaussiana.png" 
+                          alt="Diagrama de la Regla Empírica 68-95-99.7" 
+                          className="max-h-[140px] w-auto object-contain mix-blend-multiply"
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
 
           {/* Grid de Inferencia */}
-          <div className="grid md:grid-cols-2 gap-6">
-             {/* 4.2 Regresión */}
-             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-800 mb-2">4.2 Regresión Lineal</h3>
-                <p className="text-xs text-gray-500 mb-3">Modelar matemáticamente la relación entre dos variables.</p>
-                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
-                    <BlockMath math="y = mx + b" />
-                    <p className="text-[10px] mt-1 text-gray-400">
-                        Donde <InlineMath math="m" /> es la pendiente y <InlineMath math="b" /> la intersección.
-                    </p>
-                </div>
-             </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  
+          {/* 4.2 Regresión */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 className="font-bold text-gray-800 mb-2">Regresión Lineal</h3>
+              <p className="text-xs text-gray-500 mb-3">Modelar matemáticamente la relación entre dos variables.</p>
+            </div>
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
+              <BlockMath math="y = mx + b" />
+              <p className="text-[10px] mt-1 text-gray-400">
+                Donde <InlineMath math="m" /> es la pendiente y <InlineMath math="b" /> la intersección.
+              </p>
+            </div>
+          </section>
 
-             {/* 4.3 Correlación */}
-             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-800 mb-2">4.3 Correlación de Pearson (<InlineMath math="r" />)</h3>
-                <p className="text-xs text-gray-500 mb-3">Mide qué tan fuerte es la relación lineal.</p>
-                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
-                    <InlineMath math="-1 \leq r \leq 1" />
-                </div>
-                <ul className="text-[10px] text-gray-500 mt-2 pl-4 list-disc space-y-1">
-                    <li><InlineMath math="r=1" />: Correlación Positiva Perfecta.</li>
-                    <li><InlineMath math="r=0" />: Sin relación lineal.</li>
-                    <li><InlineMath math="r=-1" />: Correlación Negativa Perfecta.</li>
+          {/* 4.3 Correlación */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <h3 className="font-bold text-gray-800 mb-2">Correlación de Pearson (<InlineMath math="r" />)</h3>
+            <p className="text-xs text-gray-500 mb-3">Mide qué tan fuerte es la relación lineal.</p>
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
+              <InlineMath math="-1 \leq r \leq 1" />
+            </div>
+            <ul className="text-[10px] text-gray-500 mt-2 pl-4 list-disc space-y-1">
+              <li><InlineMath math="r=1" />: Correlación Positiva Perfecta.</li>
+              <li><InlineMath math="r=0" />: Sin relación lineal.</li>
+              <li><InlineMath math="r=-1" />: Correlación Negativa Perfecta.</li>
+            </ul>
+          </section>
+
+          {/* 4.4 Gráfico de Dispersión (Ocupa el ancho completo del grid en MD) */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm md:col-span-2">
+            <h3 className="font-bold text-gray-800 mb-1">Gráfico de Dispersión (Scatter Plot)</h3>
+            <p className="text-xs text-gray-500 mb-4">Representación visual de la relación entre dos variables.</p>
+
+            {/* Contenedor interno dividido en dos columnas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+      
+              {/* Columna Izquierda: Conceptos */}
+              <div className="bg-gray-50 p-3.5 rounded text-[10px] text-gray-600 h-full flex flex-col justify-center">
+                <p className="font-medium text-gray-700 mb-1.5">El gráfico permite observar el comportamiento de los datos:</p>
+                <ul className="list-disc pl-4 space-y-1.5">
+                  <li><strong>Tendencia:</strong> Identifica si a mayor X, mayor o menor Y.</li>
+                  <li><strong>Fuerza:</strong> La cercanía de los puntos a una línea imaginaria.</li>
+                  <li><strong>Atípicos:</strong> Puntos aislados que se alejan del patrón general.</li>
                 </ul>
-             </section>
-             {/* 4.4 Gráfico de Dispersión */}
-             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                 <h3 className="font-bold text-gray-800 mb-2">4.4 Gráfico de Dispersión (Scatter Plot)</h3>
-                 <p className="text-xs text-gray-500 mb-3">Representación visual de la relación entre dos variables.</p>
-    
-                 {/* Visualización del concepto */}
-                 <div className="mb-4">
-        
-                 </div>
+              </div>
 
-                 <div className="bg-gray-50 p-3 rounded text-[10px] text-gray-600">
-                     <p>El gráfico permite observar el comportamiento de los datos:</p>
-                     <ul className="list-disc pl-4 mt-2 space-y-1">
-                         <li><strong>Tendencia:</strong> Identifica si a mayor X, mayor o menor Y.</li>
-                         <li><strong>Fuerza:</strong> La cercanía de los puntos a una línea imaginaria.</li>
-                         <li><strong>Atípicos:</strong> Puntos aislados que se alejan del patrón general.</li>
-                     </ul>
-                 </div>
-             </section>
-            {/* 4.4 Covarianza */}
-            <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-800 mb-2">4.4 Covarianza</h3>
-                <p className="text-xs text-gray-500 mb-3">Medida que indica el grado de variación conjunta de dos variables aleatorias.</p>
-                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
-                    <BlockMath math="Cov(X, Y) = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n}" />
-                    <p className="text-[10px] mt-1 text-gray-400">
-                        Donde <InlineMath math="\bar{x}" /> y <InlineMath math="\bar{y}" /> son las medias de cada variable.
-                    </p>
-                </div>
-            </section>
-            {/* 4.5 Coeficiente de Determinación */}
-             <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-800 mb-2">4.5 Coeficiente de Determinación (R²)</h3>
-                <p className="text-xs text-gray-500 mb-3">Indica la proporción de la varianza total de la variable dependiente explicada por el modelo.</p>
-                <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
-                    <BlockMath math="R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}" />
-                    <p className="text-[10px] mt-1 text-gray-400">
-                        Donde <InlineMath math="\hat{y}_i" /> son los valores predichos y <InlineMath math="\bar{y}" /> el promedio real.
-                    </p>
-                </div>
-             </section>
-          </div>
+              {/* Columna Derecha: Imagen ilustrativa */}
+              <div className="flex justify-center items-center bg-gray-50/50 p-2 rounded-lg border border-dashed border-gray-200 h-full min-h-[140px]">
+                <img 
+                  src="/diagrama-dispersion.jpg" 
+                  alt="Ejemplo de Gráfico de Dispersión" 
+                  className="max-h-[130px] w-auto object-contain mix-blend-multiply"
+                />
+              </div>
+
+            </div>
+          </section>
+
+          {/* 4.4 Covarianza */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 className="font-bold text-gray-800 mb-2">Covarianza</h3>
+              <p className="text-xs text-gray-500 mb-3">Medida que indica el grado de variación conjunta de dos variables aleatorias.</p>
+            </div>
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
+              <BlockMath math="Cov(X, Y) = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n}" />
+              <p className="text-[10px] mt-1 text-gray-400">
+                Donde <InlineMath math="\bar{x}" /> y <InlineMath math="\bar{y}" /> son las medias de cada variable.
+              </p>
+            </div>
+          </section>
+
+          {/* 4.5 Coeficiente de Determinación */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 className="font-bold text-gray-800 mb-2">Coeficiente de Determinación (R²)</h3>
+              <p className="text-xs text-gray-500 mb-3">Indica la proporción de la varianza total de la variable dependiente explicada por el modelo.</p>
+            </div>
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
+              <BlockMath math="R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}" />
+              <p className="text-[10px] mt-1 text-gray-400">
+                Donde <InlineMath math="\hat{y}_i" /> son los valores predichos y <InlineMath math="\bar{y}" /> el promedio real.
+              </p>
+            </div>
+          </section>
+
+         </div>
         </div>
       )}
 

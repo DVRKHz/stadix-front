@@ -111,8 +111,8 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">3. Estadística Descriptiva</h1>
-        <p className="text-gray-500 mt-2">Análisis numérico de las propiedades del conjunto de datos (3.1 - 3.3).</p>
+        <h1 className="text-3xl font-extrabold text-gray-900">Estadística Descriptiva</h1>
+        <p className="text-gray-500 mt-2">Análisis numérico de las propiedades del conjunto de datos.</p>
       </header>
 
       {/* Navegación Tabs */}
@@ -130,7 +130,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
           {/* 3.1 Tendencia Central */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
             <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
-              <span>🎯</span> 3.1 Medidas de Tendencia Central
+              <span>🎯</span>Medidas de Tendencia Central
             </h3>
             <p className="text-sm text-gray-600 mb-4">
               Son valores numéricos que localizan el centro de un conjunto de datos.
@@ -169,7 +169,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
           {/* 3.2 Variabilidad */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
             <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
-              <span>〰️</span> 3.2 Medidas de Variabilidad
+              <span>〰️</span>Medidas de Variabilidad
             </h3>
             <p className="text-sm text-gray-600 mb-4">
               Indican qué tan dispersos o separados están los datos entre sí.
@@ -211,7 +211,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
 
           {/* 3.3 Posición */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-             <h3 className="text-lg font-bold text-purple-900 mb-2">3.3 Medidas de Posición</h3>
+             <h3 className="text-lg font-bold text-purple-900 mb-2">Medidas de Posición</h3>
              <ul className="text-sm text-gray-600 space-y-2 pl-4">
                <li className="flex items-center gap-2">
                  <span className="font-bold text-purple-700">Cuartiles (<InlineMath math="Q_k" />):</span> 

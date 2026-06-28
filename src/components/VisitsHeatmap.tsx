@@ -17,15 +17,14 @@ export default function VisitsHeatmap() {
   const [visitsData, setVisitsData] = useState<HeatmapValue[]>([]);
   const [totalVisits, setTotalVisits] = useState<number>(0);
 
-  const availableYears = [2026]; // Solo el año actual por ahora, pero se puede expandir fácilmente en el futuro
+  const availableYears = [2026];
 
   const startDate = new Date(`${selectedYear - 1}-12-31`);
   const endDate = new Date(`${selectedYear}-12-31`);
 
-// Definimos explícitamente una tupla mutable de exactamente 12 elementos de tipo string
-const mesesEnEspanol: [string, string, string, string, string, string, string, string, string, string, string, string] = [
-  'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-];
+  const mesesEnEspanol: [string, string, string, string, string, string, string, string, string, string, string, string] = [
+    'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+  ];
 
   useEffect(() => {
     const storedHistory = localStorage.getItem('stadix_analytics_history');
@@ -38,7 +37,8 @@ const mesesEnEspanol: [string, string, string, string, string, string, string, s
       const todayRecord = history.find((record) => record.date === todayStr);
 
       if (todayRecord) {
-        if (todayRecord.count < 5) todayRecord.count += 1;
+        // Incrementamos de forma normal el conteo para acumular visitas reales
+        todayRecord.count += 1;
       } else {
         history.push({ date: todayStr, count: 1 });
       }
@@ -60,12 +60,13 @@ const mesesEnEspanol: [string, string, string, string, string, string, string, s
 
   }, [selectedYear]);
 
+  // AUTOMATIZACIÓN DE RANGOS ESPECÍFICOS: Asignación de escala por volumen de usuarios
   const getClassForValue = (value: any) => {
     if (!value || value.count === 0) return 'color-empty';
-    if (value.count === 1) return 'color-scale-1';
-    if (value.count === 2) return 'color-scale-2';
-    if (value.count === 3) return 'color-scale-3';
-    return 'color-scale-4';
+    if (value.count >= 1 && value.count <= 5) return 'color-scale-1';   // 1 a 5 usuarios
+    if (value.count >= 6 && value.count <= 20) return 'color-scale-2';  // 6 a 20 usuarios
+    if (value.count >= 21 && value.count <= 50) return 'color-scale-3'; // 21 a 50 usuarios
+    return 'color-scale-4';                                             // Más de 50 usuarios
   };
 
   return (
@@ -84,15 +85,15 @@ const mesesEnEspanol: [string, string, string, string, string, string, string, s
               endDate={endDate}
               values={visitsData}
               classForValue={getClassForValue}
-              monthLabels={mesesEnEspanol} // 👈 TRADUCCIÓN INMEDIATA Y NATIVA AQUÍ
+              monthLabels={mesesEnEspanol}
               titleForValue={(value: any) => 
-                value && value.date ? `${value.count} visitas el ${value.date}` : 'Sin visitas'
+                value && value.count ? `${value.count} usuarios el ${value.date}` : 'Sin visitas'
               }
               tooltipDataAttrs={(value: any): any => {
                 return {
                   'data-tooltip-id': 'heatmap-tooltip',
-                  'data-tooltip-content': value && value.date 
-                    ? `${value.count} visitas el ${value.date}`
+                  'data-tooltip-content': value && value.count 
+                    ? `${value.count} usuarios el ${value.date}`
                     : 'Sin visitas',
                 };
               }}
@@ -100,15 +101,35 @@ const mesesEnEspanol: [string, string, string, string, string, string, string, s
             <Tooltip id="heatmap-tooltip" />
           </div>
 
-          {/* Leyenda */}
+          {/* Leyenda Interactiva con rangos específicos */}
           <div className="flex items-center justify-end gap-1 text-xs font-medium text-slate-600 mt-4">
-            <span>Menos</span>
-            <div className="w-3 h-3 rounded-sm bg-slate-200"></div>
-            <div className="w-3 h-3 rounded-sm bg-indigo-100"></div>
-            <div className="w-3 h-3 rounded-sm bg-indigo-300"></div>
-            <div className="w-3 h-3 rounded-sm bg-indigo-500"></div>
-            <div className="w-3 h-3 rounded-sm bg-indigo-700"></div>
-            <span>Más</span>
+            <span className="mr-1">Menos</span>
+            <div 
+              className="w-3 h-3 rounded-sm bg-slate-200 cursor-help"
+              data-tooltip-id="heatmap-tooltip"
+              data-tooltip-content="0 usuarios"
+            ></div>
+            <div 
+              className="w-3 h-3 rounded-sm bg-indigo-100 cursor-help"
+              data-tooltip-id="heatmap-tooltip"
+              data-tooltip-content="1 - 5 usuarios"
+            ></div>
+            <div 
+              className="w-3 h-3 rounded-sm bg-indigo-300 cursor-help"
+              data-tooltip-id="heatmap-tooltip"
+              data-tooltip-content="6 - 20 usuarios"
+            ></div>
+            <div 
+              className="w-3 h-3 rounded-sm bg-indigo-500 cursor-help"
+              data-tooltip-id="heatmap-tooltip"
+              data-tooltip-content="21 - 50 usuarios"
+            ></div>
+            <div 
+              className="w-3 h-3 rounded-sm bg-indigo-700 cursor-help"
+              data-tooltip-id="heatmap-tooltip"
+              data-tooltip-content="Más de 50 usuarios"
+            ></div>
+            <span className="ml-1">Más</span>
           </div>
         </div>
 

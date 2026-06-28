@@ -60,7 +60,7 @@ if (tipo == "character") {
       
       {/* Header */}
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">1. Variables, Datos e Información</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900">Variables, Datos e Información</h1>
         <p className="text-gray-500 mt-2">Fundamentos de la estadística y clasificación de datos.</p>
       </header>
 
@@ -138,7 +138,7 @@ if (tipo == "character") {
             <div className="space-y-6">
               {/* Cualitativas */}
               <div className="border-l-4 border-purple-400 pl-4">
-                <h3 className="text-purple-700 font-bold">1. Cualitativas (Categóricas)</h3>
+                <h3 className="text-purple-700 font-bold">Cualitativas (Categóricas)</h3>
                 <p className="text-sm text-gray-600 mt-1">Utilizan etiquetas o nombres para identificar atributos. No tienen sentido aritmético.</p>
                 <div className="mt-3 grid grid-cols-2 gap-4">
                   <div className="bg-purple-50 p-3 rounded-lg">
@@ -154,7 +154,7 @@ if (tipo == "character") {
 
               {/* Cuantitativas */}
               <div className="border-l-4 border-green-500 pl-4">
-                <h3 className="text-green-700 font-bold">2. Cuantitativas (Numéricas)</h3>
+                <h3 className="text-green-700 font-bold">Cuantitativas (Numéricas)</h3>
                 <p className="text-sm text-gray-600 mt-1">Valores numéricos donde las operaciones aritméticas son aplicables.</p>
                 <div className="mt-3 grid grid-cols-2 gap-4">
                   <div className="bg-green-50 p-3 rounded-lg">

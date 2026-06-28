@@ -7,7 +7,7 @@ export default function Home() {
   // Configuración de los módulos para generar el grid dinámicamente
   const modules = [
     {
-      title: "1. Variables y Datos",
+      title: "Variables y Datos",
       desc: "Aprende a identificar y clasificar los tipos de variables estadísticas.",
       path: "/variables",
       icon: "🔍",
@@ -15,7 +15,7 @@ export default function Home() {
       textColor: "text-blue-700"
     },
     {
-      title: "2. Organización",
+      title: "Organización de Datos",
       desc: "Tablas de frecuencia, histogramas, diagramas de caja y circulares.",
       path: "/organizacion",
       icon: "📊",
@@ -23,7 +23,7 @@ export default function Home() {
       textColor: "text-indigo-700"
     },
     {
-      title: "3. Est. Descriptiva",
+      title: "Estadística Descriptiva",
       desc: "Medidas de tendencia central, dispersión y posición con carga de Excel.",
       path: "/descriptive",
       icon: "∑",
@@ -31,7 +31,7 @@ export default function Home() {
       textColor: "text-cyan-700"
     },
     {
-      title: "3.5 Probabilidad",
+      title: "Probabilidad",
       desc: "Calculadoras visuales para Binomial, Poisson y Distribución Normal.",
       path: "/probabilidad",
       icon: "🎲",
@@ -39,7 +39,7 @@ export default function Home() {
       textColor: "text-emerald-700"
     },
     {
-      title: "4. Inferencia",
+      title: "Estadística Inferencial",
       desc: "Regresión Lineal, Correlación y Pruebas de Hipótesis (T-Student, ANOVA).",
       path: "/inferencial",
       icon: "🔮",
@@ -47,7 +47,7 @@ export default function Home() {
       textColor: "text-violet-700"
     },
     {
-      title: "5. No Paramétrica",
+      title: "No Paramétrica",
       desc: "Pruebas libres de distribución como Chi-Cuadrada.",
       path: "/no-parametrica",
       icon: "≠",
@@ -55,7 +55,7 @@ export default function Home() {
       textColor: "text-fuchsia-700"
     },
     {
-      title: "6. Muestreo",
+      title: "Muestreo",
       desc: "Calculadora de tamaño de muestra para poblaciones finitas e infinitas.",
       path: "/muestreo",
       icon: "🎯",
@@ -96,7 +96,7 @@ export default function Home() {
           <FeatureCard 
             icon="💻" 
             title="Códigos de Programación" 
-            text="Aprende programación estadística viendo los códigos reales que ejecuta cada análisis." 
+            text="Aprende programación estadística viendo los códigos en Python y R que ejecuta cada análisis." 
           />
         </div>
       </div>
@@ -138,8 +138,9 @@ export default function Home() {
       {/* --- FOOTER SECCIÓN MODIFICADA --- */}
       <footer className="text-center mt-20 text-slate-400 text-sm flex flex-col items-center gap-3">
         <div>
-          <p>© {new Date().getFullYear()} Universidad Autónoma de Chiapas - Proyecto Educativo. Desarrollado por Antonio E.P. Heredia y Jorge J.P. Heredia</p>
-          <p>Contribuciones por Rodrigo Martínez y Cristóbal Pérez.</p>
+          <p>© {new Date().getFullYear()} Benemérita Universidad Autónoma de Chiapas - Proyecto Educativo. Primera versión desarrollada por Antonio E.P. Heredia y Jorge J.P. Heredia</p>
+          <p>Contribuciones a la segunda versión por André R.M Martínez y Cristóbal P. González.</p>
+          <p>Diseño e idea conceptual: Moisés Silva Cervantes.</p>
         </div>
         
         {/* Contador integrado y centrado */}

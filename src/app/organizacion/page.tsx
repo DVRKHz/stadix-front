@@ -137,8 +137,8 @@ barplot(tabla, main = "Gráfico de Barras", col = "skyblue")`;
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">2. Organización de Datos</h1>
-        <p className="text-gray-500 mt-2">Tablas de frecuencia y representaciones gráficas (2.1 - 2.2).</p>
+        <h1 className="text-3xl font-extrabold text-gray-900">Organización de Datos</h1>
+        <p className="text-gray-500 mt-2">Tablas de frecuencia y representaciones gráficas.</p>
       </header>
 
       {/* Tabs */}
@@ -153,7 +153,7 @@ barplot(tabla, main = "Gráfico de Barras", col = "skyblue")`;
       {activeTab === 'concepts' && (
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 className="font-bold text-blue-900 mb-2">2.1 Tablas de Frecuencia</h3>
+            <h3 className="font-bold text-blue-900 mb-2">Tablas de Frecuencia</h3>
             <p className="text-sm text-gray-600">Es una ordenación de datos en forma de tabla que muestra cuantas veces se repite cada valor o rango de valores (intervalos).</p>
             <ul className="text-xs mt-3 space-y-1 text-gray-500">
               <li>• <strong>fi (Absoluta):</strong> Conteo simple.</li>
@@ -162,7 +162,7 @@ barplot(tabla, main = "Gráfico de Barras", col = "skyblue")`;
             </ul>
           </div>
           <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 className="font-bold text-blue-900 mb-2">2.2 Tipos de Gráficas</h3>
+            <h3 className="font-bold text-blue-900 mb-2">Tipos de Gráficas</h3>
             <ul className="space-y-3 text-sm text-gray-600">
               <li className="flex items-center gap-2"><span className="p-1 bg-blue-100 rounded">📊 Barras</span> Histogramas para comparar frecuencias.</li>
               <li className="flex items-center gap-2"><span className="p-1 bg-green-100 rounded">📈 Líneas</span> Polígono de frecuencia para tendencias.</li>

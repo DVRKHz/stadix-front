@@ -127,7 +127,7 @@ if (p < 0.05) {
   return (
     <div className="max-w-6xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">5. Estadística No Paramétrica</h1>
+        <h1 className="text-3xl font-extrabold text-gray-900">Estadística No Paramétrica</h1>
         <p className="text-gray-500 mt-2">Métodos para datos cualitativos o que no siguen una distribución normal.</p>
       </header>
 

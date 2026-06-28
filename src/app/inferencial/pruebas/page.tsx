@@ -223,9 +223,6 @@ if (p_val3 < 0.05) {
   return (
     <div className="max-w-5xl mx-auto animate-fade-in pb-20">
       <header className="mb-8">
-        <div className="flex items-center gap-2 mb-2">
-            <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Módulo 4.3</span>
-        </div>
         <h1 className="text-3xl font-extrabold text-gray-900">Pruebas de Hipótesis</h1>
         <p className="text-gray-500 mt-2">Comparación de medias y análisis de varianza para la toma de decisiones.</p>
       </header>
