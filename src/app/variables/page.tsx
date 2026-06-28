@@ -111,25 +111,65 @@ if (tipo == "character") {
             </p>
           </section>
 
-          {/* Variables y Unidades */}
+{/* Variables y Unidades */}
           <div className="grid md:grid-cols-2 gap-6">
-            <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-md font-bold text-blue-800 mb-2">Unidades Muestrales</h3>
-              <p className="text-sm text-gray-600 mb-4">Objetos de interés de un estudio.</p>
-              <ul className="text-xs text-gray-500 space-y-2 bg-gray-50 p-3 rounded-lg">
-                <li>• Alumno inscrito (Censo universitario)</li>
-                <li>• Personal administrativo</li>
-                <li>• Docente universitario</li>
-              </ul>
-            </section>
+            
+            {/* Tarjeta 1: Unidad Muestral */}
+            <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+              <div>
+                <h3 className="text-md font-bold text-blue-800 mb-2 flex items-center gap-2">
+                  <span>🔬</span> Unidades Muestrales
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Es la entidad mínima (persona, objeto, lugar o animal) de la cual se extrae la medición o el dato.
+                </p>
+              </div>
 
-            <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-md font-bold text-blue-800 mb-2">Población</h3>
-              <p className="text-sm text-gray-600 mb-4">Grupo particular de unidades muestrales (finitas o infinitas).</p>
-              <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
-                <strong>Ejemplo:</strong> Estaciones en la Zona Metropolitana de Guadalajara para medir PM10.
+              <div className="space-y-2 bg-gray-50 p-3 rounded-lg text-xs text-gray-600 border border-gray-200/60">
+                <span className="block font-bold text-gray-700 uppercase tracking-wider text-[10px] mb-1">Ejemplos:</span>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-blue-600 shrink-0">1.</span>
+                  <span>Un <strong>estudiante</strong> regular de la UNACH.</span>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-blue-600 shrink-0">2.</span>
+                  <span>Un <strong>refrigerador médico</strong> en un Centro de Salud de Tuxtla.</span>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-blue-600 shrink-0">3.</span>
+                  <span>Un <strong>árbol de Flamboyán</strong> en el Parque Marimba.</span>
+                </div>
               </div>
             </section>
+
+            {/* Tarjeta 2: Población */}
+            <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+              <div>
+                <h3 className="text-md font-bold text-blue-800 mb-2 flex items-center gap-2">
+                  <span>🌐</span> Población (N)
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Es el conjunto total de <em>todas</em> las unidades muestrales que comparten una característica común.
+                </p>
+              </div>
+
+              <div className="space-y-2 bg-gray-50 p-3 rounded-lg text-xs text-gray-600 border border-gray-200/60">
+                <span className="block font-bold text-gray-700 uppercase tracking-wider text-[10px] mb-1">Ejemplos:</span>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-green-600 shrink-0">1.</span>
+                  <span>El total de los <strong>30,000 alumnos</strong> inscritos en la UNACH.</span>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-green-600 shrink-0">2.</span>
+                  <span>La red completa de <strong>refrigeradores médicos</strong> de la Secretaría de Salud en Chiapas.</span>
+                </div>
+                <div className="flex gap-2 items-start">
+                  <span className="font-bold text-green-600 shrink-0">3.</span>
+                  <span>El inventario total de <strong>árboles</strong> dentro del Parque Marimba.</span>
+                </div>
+              </div>
+            </section>
+
           </div>
 
           {/* Clasificación Detallada */}
