@@ -140,7 +140,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
           {/* Diccionario de Símbolos para principiantes */}
           <div className="bg-slate-900 text-slate-200 p-5 rounded-xl mb-8 shadow-md">
             <p className="font-bold text-amber-400 mb-3 text-xs uppercase tracking-wider flex items-center gap-2">
-              <span>📖</span> Diccionario rápido para leer las fórmulas:
+              <span>📖</span> Diccionario para leer las fórmulas:
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
               <div><span className="text-blue-400 font-bold">n</span> = Total de datos (Muestra)</div>
