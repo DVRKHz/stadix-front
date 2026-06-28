@@ -145,12 +145,12 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
               <div><span className="text-blue-400 font-bold">n</span> = Total de datos (Muestra)</div>
               <div><span className="text-green-400 font-bold">N</span> = Total de datos (Población)</div>
-              <div><span className="text-purple-400 font-bold">x_i</span> = El dato en la posición &apos;i&apos;</div>
-              <div><span className="text-yellow-400 font-bold">∑</span> = Sumar todos los valores</div>
-              <div><span className="text-blue-400 font-bold">x̄</span> = Media de la muestra</div>
-              <div><span className="text-green-400 font-bold">μ</span> = Media de la población</div>
-              <div><span className="text-pink-400 font-bold">f_i</span> = Frecuencia (repeticiones)</div>
-              <div><span className="text-orange-400 font-bold">| |</span> = Valor absoluto (positivo)</div>
+              <div><span className="text-purple-400 font-bold"><InlineMath math="x_i" /></span> = El dato en la posición &apos;i&apos;</div>
+              <div><span className="text-yellow-400 font-bold"><InlineMath math="∑" /></span> = Sumar todos los valores</div>
+              <div><span className="text-blue-400 font-bold"><InlineMath math="\bar{x}" /></span> = Media de la muestra</div>
+              <div><span className="text-green-400 font-bold"><InlineMath math="\mu" /></span> = Media de la población</div>
+              <div><span className="text-pink-400 font-bold"><InlineMath math="f_i" /></span> = Frecuencia (repeticiones)</div>
+              <div><span className="text-orange-400 font-bold"><InlineMath math="|x_i - \bar{x}|" /></span> = Valor absoluto (positivo)</div>
             </div>
           </div>
 

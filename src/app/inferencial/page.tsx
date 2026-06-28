@@ -231,56 +231,74 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
             </div>
           </section>
 
+          {/* Diccionario de Símbolos para Estadística Bivariada */}
+          <div className="bg-slate-900 text-slate-200 p-5 rounded-xl mb-6 shadow-md">
+            <p className="font-bold text-amber-400 mb-3 text-xs uppercase tracking-wider flex items-center gap-2">
+              <span>📖</span> Diccionario para fórmulas de dos variables:
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
+              <div><span className="text-blue-400 font-bold"><InlineMath math="X, Y" /></span> = Las dos variables a comparar</div>
+              <div><span className="text-purple-400 font-bold"><InlineMath math="x_i, y_i" /></span> = El par de datos en la posición &apos;i&apos;</div>
+              <div><span className="text-yellow-400 font-bold"><InlineMath math="∑" /></span> = Sumatoria desde <InlineMath math="i=1" /> hasta <InlineMath math="n" /></div>
+              <div><span className="text-green-400 font-bold"><InlineMath math="\bar{x}, \bar{y}" /></span> = Promedios (medias) de <InlineMath math="X" /> y de <InlineMath math="Y" /></div>
+              <div><span className="text-pink-400 font-bold"><InlineMath math="m" /></span> = Pendiente (inclinación de la recta)</div>
+              <div><span className="text-orange-400 font-bold"><InlineMath math="b" /></span> = Intersección (dónde corta al eje Y)</div>
+              <div><span className="text-cyan-400 font-bold"><InlineMath math="\hat{y}_i" /></span> = Valor predicho o estimado</div>
+              <div><span className="text-red-400 font-bold"><InlineMath math="n" /></span> = Número total de pares de datos</div>
+            </div>
+          </div>
+
           {/* Grid de Inferencia */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   
-          {/* 4.2 Regresión */}
+          {/* 4.1 Regresión */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">Regresión Lineal</h3>
-              <p className="text-xs text-gray-500 mb-3">Modelar matemáticamente la relación entre dos variables.</p>
+              <h3 className="font-bold text-gray-800 mb-2">4.1 Regresión Lineal</h3>
+              <p className="text-xs text-gray-500 mb-3">Es una técnica para trazar una &quot;línea recta óptima&quot; a través de tus datos. Sirve para predecir el comportamiento de una variable dependiente (<InlineMath math="Y" />) basándose en una independiente (<InlineMath math="X" />).</p>
             </div>
-            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
               <BlockMath math="y = mx + b" />
               <p className="text-[10px] mt-1 text-gray-400">
-                Donde <InlineMath math="m" /> es la pendiente y <InlineMath math="b" /> la intersección.
+                Donde <InlineMath math="m" /> es cuánto sube o baja la recta por cada paso de <InlineMath math="X" />, y <InlineMath math="b" /> es el punto de partida en el eje vertical.
               </p>
             </div>
           </section>
 
-          {/* 4.3 Correlación */}
-          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 className="font-bold text-gray-800 mb-2">Correlación de Pearson (<InlineMath math="r" />)</h3>
-            <p className="text-xs text-gray-500 mb-3">Mide qué tan fuerte es la relación lineal.</p>
-            <div className="bg-gray-50 p-3 rounded text-center text-gray-700">
-              <InlineMath math="-1 \leq r \leq 1" />
+          {/* 4.2 Correlación */}
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 className="font-bold text-gray-800 mb-2">4.2 Correlación de Pearson (<InlineMath math="r" />)</h3>
+              <p className="text-xs text-gray-500 mb-2">Mide la fuerza y dirección de la relación lineal entre dos variables cuantitativas. No implica que una cause a la otra.</p>
             </div>
-            <ul className="text-[10px] text-gray-500 mt-2 pl-4 list-disc space-y-1">
-              <li><InlineMath math="r=1" />: Correlación Positiva Perfecta.</li>
-              <li><InlineMath math="r=0" />: Sin relación lineal.</li>
-              <li><InlineMath math="r=-1" />: Correlación Negativa Perfecta.</li>
-            </ul>
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 my-2 border border-gray-200/60 overflow-x-auto">
+              <BlockMath math="r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2 \sum_{i=1}^{n} (y_i - \bar{y})^2}}" />
+            </div>
+            <div className="bg-blue-50/50 p-2.5 rounded-lg border border-blue-100">
+              <span className="block text-[10px] font-bold text-blue-900 mb-1">Rango de valores (<InlineMath math="-1 \leq r \leq 1" />):</span>
+              <ul className="text-[10px] text-gray-600 pl-3 list-disc space-y-0.5">
+                <li><strong className="text-green-700">r = 1</strong>: Correlación Positiva Perfecta (si X sube, Y sube).</li>
+                <li><strong className="text-gray-500">r = 0</strong>: Ausencia total de relación lineal.</li>
+                <li><strong className="text-red-700">r = -1</strong>: Correlación Negativa Perfecta (si X sube, Y baja).</li>
+              </ul>
+            </div>
           </section>
 
-          {/* 4.4 Gráfico de Dispersión (Ocupa el ancho completo del grid en MD) */}
+          {/* 4.3 Gráfico de Dispersión (Ocupa el ancho completo del grid en MD) */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm md:col-span-2">
-            <h3 className="font-bold text-gray-800 mb-1">Gráfico de Dispersión (Scatter Plot)</h3>
-            <p className="text-xs text-gray-500 mb-4">Representación visual de la relación entre dos variables.</p>
+            <h3 className="font-bold text-gray-800 mb-1">4.3 Gráfico de Dispersión (Scatter Plot)</h3>
+            <p className="text-xs text-gray-500 mb-4">Es el mapa cartesiano donde cada punto representa a un sujeto de estudio con sus dos coordenadas (<InlineMath math="x_i, y_i" />).</p>
 
-            {/* Contenedor interno dividido en dos columnas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-      
-              {/* Columna Izquierda: Conceptos */}
-              <div className="bg-gray-50 p-3.5 rounded text-[10px] text-gray-600 h-full flex flex-col justify-center">
-                <p className="font-medium text-gray-700 mb-1.5">El gráfico permite observar el comportamiento de los datos:</p>
-                <ul className="list-disc pl-4 space-y-1.5">
-                  <li><strong>Tendencia:</strong> Identifica si a mayor X, mayor o menor Y.</li>
-                  <li><strong>Fuerza:</strong> La cercanía de los puntos a una línea imaginaria.</li>
-                  <li><strong>Atípicos:</strong> Puntos aislados que se alejan del patrón general.</li>
+              <div className="bg-gray-50 p-4 rounded-lg text-[11px] text-gray-600 h-full flex flex-col justify-center border border-gray-200/60">
+                <p className="font-bold text-gray-700 mb-2">Al observar la nube de puntos puedes identificar:</p>
+                <ul className="list-disc pl-4 space-y-2">
+                  <li><strong>Tendencia:</strong> ¿La nube va hacia arriba, hacia abajo o está completamente plana?</li>
+                  <li><strong>Fuerza:</strong> ¿Los puntos están juntos formando casi una línea o están dispersos por todas partes?</li>
+                  <li><strong>Datos Atípicos (Outliers):</strong> Puntos que se salen por completo del comportamiento del resto del grupo.</li>
                 </ul>
               </div>
 
-              {/* Columna Derecha: Imagen ilustrativa */}
               <div className="flex justify-center items-center bg-gray-50/50 p-2 rounded-lg border border-dashed border-gray-200 h-full min-h-[140px]">
                 <img 
                   src="/diagrama-dispersion.jpg" 
@@ -288,20 +306,19 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
                   className="max-h-[130px] w-auto object-contain mix-blend-multiply"
                 />
               </div>
-
             </div>
           </section>
 
           {/* 4.4 Covarianza */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">Covarianza</h3>
-              <p className="text-xs text-gray-500 mb-3">Medida que indica el grado de variación conjunta de dos variables aleatorias.</p>
+              <h3 className="font-bold text-gray-800 mb-2">4.4 Covarianza (<InlineMath math="Cov" />)</h3>
+              <p className="text-xs text-gray-500 mb-3">Indica si dos variables &quot;se mueven juntas&quot;. Si es positiva, ambas crecen a la par; si es negativa, cuando una sube la otra baja. El problema es que su valor numérico es difícil de interpretar porque depende de las unidades de medida.</p>
             </div>
-            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
-              <BlockMath math="Cov(X, Y) = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n}" />
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
+              <BlockMath math="Cov(X, Y) = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n}" />
               <p className="text-[10px] mt-1 text-gray-400">
-                Donde <InlineMath math="\bar{x}" /> y <InlineMath math="\bar{y}" /> son las medias de cada variable.
+                Multiplica las distancias de cada dato respecto a su propia media.
               </p>
             </div>
           </section>
@@ -309,18 +326,18 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           {/* 4.5 Coeficiente de Determinación */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">Coeficiente de Determinación (R²)</h3>
-              <p className="text-xs text-gray-500 mb-3">Indica la proporción de la varianza total de la variable dependiente explicada por el modelo.</p>
+              <h3 className="font-bold text-gray-800 mb-2">4.5 Coeficiente de Determinación (<InlineMath math="R^2" />)</h3>
+              <p className="text-xs text-gray-500 mb-3">Es la &quot;calificación&quot; de tu modelo de regresión lineal (va de 0 a 1, o de 0% a 100%). Te dice exactamente qué porcentaje de la variabilidad de <InlineMath math="Y" /> logra ser explicado por tu recta.</p>
             </div>
-            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto">
-              <BlockMath math="R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}" />
+            <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
+              <BlockMath math="R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}" />
               <p className="text-[10px] mt-1 text-gray-400">
-                Donde <InlineMath math="\hat{y}_i" /> son los valores predichos y <InlineMath math="\bar{y}" /> el promedio real.
+                Compara el error de tu predicción (<InlineMath math="\hat{y}_i" />) contra el error de simplemente usar el promedio (<InlineMath math="\bar{y}" />).
               </p>
             </div>
           </section>
 
-         </div>
+          </div>
         </div>
       )}
 
