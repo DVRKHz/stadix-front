@@ -172,22 +172,33 @@ if (tipo == "character") {
 
           </div>
 
-          {/* Clasificación Detallada */}
+{/* Clasificación Detallada */}
           <section className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900 mb-6">Clasificación de Variables y Escalas</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-6">Clasificación de Variables y Escalas de Medición</h2>
             <div className="space-y-6">
+              
               {/* Cualitativas */}
               <div className="border-l-4 border-purple-400 pl-4">
                 <h3 className="text-purple-700 font-bold">Cualitativas (Categóricas)</h3>
-                <p className="text-sm text-gray-600 mt-1">Utilizan etiquetas o nombres para identificar atributos. No tienen sentido aritmético.</p>
+                <p className="text-sm text-gray-600 mt-1">Expresan cualidades, atributos o categorías. No admiten operaciones matemáticas.</p>
                 <div className="mt-3 grid grid-cols-2 gap-4">
-                  <div className="bg-purple-50 p-3 rounded-lg">
-                    <strong className="block text-xs text-purple-800 uppercase mb-1">Nominal</strong>
-                    <p className="text-xs text-gray-600">Sin jerarquía. <br/>Ej: Nacionalidad, Tipo de Sangre.</p>
+                  <div className="bg-purple-50 p-3 rounded-lg border border-purple-100">
+                    <strong className="block text-xs text-purple-800 uppercase mb-1">Escala Nominal</strong>
+                    <p className="text-xs text-gray-600">
+                      Clasifica sin relación de jerarquía u orden entre categorías.<br/>
+                      <span className="font-semibold text-purple-900 mt-1 block">Ejemplos:</span>
+                      • Licenciatura de adscripción en la UNACH.<br/>
+                      • Estado civil (Soltero, Casado).
+                    </p>
                   </div>
-                  <div className="bg-purple-50 p-3 rounded-lg">
-                    <strong className="block text-xs text-purple-800 uppercase mb-1">Ordinal</strong>
-                    <p className="text-xs text-gray-600">Con jerarquía. <br/>Ej: Nivel socioeconómico, Nivel de dolor.</p>
+                  <div className="bg-purple-50 p-3 rounded-lg border border-purple-100">
+                    <strong className="block text-xs text-purple-800 uppercase mb-1">Escala Ordinal</strong>
+                    <p className="text-xs text-gray-600">
+                      Clasifica estableciendo un orden o jerarquía natural.<br/>
+                      <span className="font-semibold text-purple-900 mt-1 block">Ejemplos:</span>
+                      • Semestre en curso (1°, 2°, 3°...).<br/>
+                      • Nivel de riesgo epidemiológico (Bajo, Medio, Alto).
+                    </p>
                   </div>
                 </div>
               </div>
@@ -195,18 +206,29 @@ if (tipo == "character") {
               {/* Cuantitativas */}
               <div className="border-l-4 border-green-500 pl-4">
                 <h3 className="text-green-700 font-bold">Cuantitativas (Numéricas)</h3>
-                <p className="text-sm text-gray-600 mt-1">Valores numéricos donde las operaciones aritméticas son aplicables.</p>
+                <p className="text-sm text-gray-600 mt-1">Se expresan mediante cantidades numéricas donde las operaciones aritméticas tienen sentido y rigor conceptual.</p>
                 <div className="mt-3 grid grid-cols-2 gap-4">
-                  <div className="bg-green-50 p-3 rounded-lg">
-                    <strong className="block text-xs text-green-800 uppercase mb-1">Discretas</strong>
-                    <p className="text-xs text-gray-600">Valores finitos/enteros. <br/>Ej: Número de hijos.</p>
+                  <div className="bg-green-50 p-3 rounded-lg border border-green-100">
+                    <strong className="block text-xs text-green-800 uppercase mb-1">Discretas (Escala de Razón)</strong>
+                    <p className="text-xs text-gray-600">
+                      Toman valores enteros (conteos). El cero indica ausencia total del atributo.<br/>
+                      <span className="font-semibold text-green-900 mt-1 block">Ejemplos:</span>
+                      • Número de materias reprobadas.<br/>
+                      • Cantidad de computadoras por laboratorio.
+                    </p>
                   </div>
-                  <div className="bg-green-50 p-3 rounded-lg">
-                    <strong className="block text-xs text-green-800 uppercase mb-1">Continuas</strong>
-                    <p className="text-xs text-gray-600">Infinitos valores en intervalo. <br/>Ej: Temperatura, Lluvia.</p>
+                  <div className="bg-green-50 p-3 rounded-lg border border-green-100">
+                    <strong className="block text-xs text-green-800 uppercase mb-1">Continuas (Intervalo / Razón)</strong>
+                    <p className="text-xs text-gray-600">
+                      Admiten cualquier valor dentro de un intervalo (mediciones con decimales).<br/>
+                      <span className="font-semibold text-green-900 mt-1 block">Ejemplos:</span>
+                      • <em className="text-gray-700">De Intervalo (Cero relativo):</em> Temperatura en Tuxtla Gutiérrez (°C).<br/>
+                      • <em className="text-gray-700">De Razón (Cero absoluto):</em> Precipitación en San Cristóbal (mm) o Precio del café ($).
+                    </p>
                   </div>
                 </div>
               </div>
+
             </div>
           </section>
         </div>
