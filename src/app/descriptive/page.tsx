@@ -127,40 +127,77 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
       {activeTab === 'concepts' && (
         <div className="grid gap-6 animate-fade-in">
           
+          {/* Alerta metodológica: Tipo de datos */}
+          <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6 rounded-r-xl shadow-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-amber-700 font-bold text-sm">📌 Nota Metodológica:</span>
+              <p className="text-xs text-amber-900">
+                Las siguientes fórmulas aplican estrictamente para <strong>Datos No Agrupados (Series Simples)</strong>, donde cada valor individual se procesa uno por uno.
+              </p>
+            </div>
+          </div>
+
+          {/* Diccionario de Símbolos para principiantes */}
+          <div className="bg-slate-900 text-slate-200 p-5 rounded-xl mb-8 shadow-md">
+            <p className="font-bold text-amber-400 mb-3 text-xs uppercase tracking-wider flex items-center gap-2">
+              <span>📖</span> Diccionario rápido para leer las fórmulas:
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
+              <div><span className="text-blue-400 font-bold">n</span> = Total de datos (Muestra)</div>
+              <div><span className="text-green-400 font-bold">N</span> = Total de datos (Población)</div>
+              <div><span className="text-purple-400 font-bold">x_i</span> = El dato en la posición &apos;i&apos;</div>
+              <div><span className="text-yellow-400 font-bold">∑</span> = Sumar todos los valores</div>
+              <div><span className="text-blue-400 font-bold">x̄</span> = Media de la muestra</div>
+              <div><span className="text-green-400 font-bold">μ</span> = Media de la población</div>
+              <div><span className="text-pink-400 font-bold">f_i</span> = Frecuencia (repeticiones)</div>
+              <div><span className="text-orange-400 font-bold">| |</span> = Valor absoluto (positivo)</div>
+            </div>
+          </div>
+
           {/* 3.1 Tendencia Central */}
-          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
-              <span>🎯</span>Medidas de Tendencia Central
+          <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
+            <h3 className="text-lg font-bold text-blue-900 mb-2 flex items-center gap-2">
+              <span>🎯</span> Medidas de Tendencia Central
             </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Son valores numéricos que localizan el centro de un conjunto de datos.
+            <p className="text-sm text-gray-600 mb-6">
+              Buscan resumir en un solo número el &quot;centro de gravedad&quot; de todo tu conjunto de datos.
             </p>
             
             <div className="grid md:grid-cols-3 gap-6">
               {/* Media */}
-              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                <strong className="block text-blue-800 mb-2">Media (<InlineMath math="\bar{x}" />)</strong>
-                <p className="text-xs text-gray-600 mb-2">El promedio aritmético de los datos.</p>
-                <div className="text-blue-900 py-2">
+              <div className="bg-blue-50/60 p-5 rounded-xl border border-blue-100 flex flex-col justify-between">
+                <div>
+                  <strong className="block text-blue-900 mb-1">Media Aritmética (<InlineMath math="\bar{x}" />)</strong>
+                  <p className="text-xs text-gray-600 mb-3">Es el promedio clásico. Sumas todos los valores individuales (<InlineMath math="x_i" />) y los divides entre la cantidad total de datos.</p>
+                </div>
+                <div className="text-blue-900 py-2 bg-white rounded-lg shadow-sm text-center">
                   <BlockMath math="\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}" />
                 </div>
               </div>
 
               {/* Mediana */}
-              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                <strong className="block text-blue-800 mb-2">Mediana</strong>
-                <p className="text-xs text-gray-600 mb-2">El valor central cuando los datos están ordenados.</p>
-                <div className="text-blue-900 py-2 text-center text-sm italic">
-                   Posición central: <InlineMath math="\frac{n+1}{2}" />
+              <div className="bg-blue-50/60 p-5 rounded-xl border border-blue-100 flex flex-col justify-between">
+                <div>
+                  <strong className="block text-blue-900 mb-1">Mediana (Me)</strong>
+                  <p className="text-xs text-gray-600 mb-3">Es el dato que queda exactamente a la mitad cuando ordenas los datos de menor a mayor.</p>
+                </div>
+                <div className="bg-white p-3 rounded-lg shadow-sm text-center">
+                  <span className="text-[11px] text-gray-500 block mb-1">Posición del dato central:</span>
+                  <div className="text-blue-900 font-bold">
+                    <InlineMath math="Pos = \frac{n+1}{2}" />
+                  </div>
+                  <span className="text-[10px] text-gray-400 mt-1 block italic">*Si n es par, promedias los dos del centro</span>
                 </div>
               </div>
 
               {/* Moda */}
-              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                <strong className="block text-blue-800 mb-2">Moda</strong>
-                <p className="text-xs text-gray-600 mb-2">El valor que ocurre con mayor frecuencia.</p>
-                <div className="text-blue-900 py-2 text-center">
-                   <InlineMath math="Mo = \text{máx}(f_i)" />
+              <div className="bg-blue-50/60 p-5 rounded-xl border border-blue-100 flex flex-col justify-between">
+                <div>
+                  <strong className="block text-blue-900 mb-1">Moda (Mo)</strong>
+                  <p className="text-xs text-gray-600 mb-3">El valor que más veces aparece (aquel cuya frecuencia absoluta <InlineMath math="f_i" /> es la máxima).</p>
+                </div>
+                <div className="text-blue-900 py-3 bg-white rounded-lg shadow-sm text-center">
+                   <InlineMath math="Mo = x_i \text{ con } \max(f_i)" />
                 </div>
               </div>
             </div>
@@ -168,41 +205,59 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
 
           {/* 3.2 Variabilidad */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-            <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
-              <span>〰️</span>Medidas de Variabilidad
+            <h3 className="text-lg font-bold text-green-900 mb-2 flex items-center gap-2">
+              <span>〰️</span> Medidas de Variabilidad o Dispersión
             </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Indican qué tan dispersos o separados están los datos entre sí.
+            <p className="text-sm text-gray-600 mb-6">
+              Miden qué tan separados están los datos respecto al centro. Un promedio con dispersión gigante es poco confiable.
             </p>
 
             <div className="space-y-4">
-              {/* Varianzas y Desviación */}
+              {/* Varianzas */}
               <div className="grid md:grid-cols-2 gap-4">
-                <div className={`bg-green-50 p-4 rounded-xl border transition-all ${isPopulation ? 'border-blue-500 ring-2 ring-blue-200' : 'border-green-100'}`}>
-                  <strong className="block text-green-800 mb-1 text-center">Varianza Poblacional</strong>
-                  <BlockMath math="\sigma^2 = \frac{\sum (x_i - \mu)^2}{N}" />
+                <div className={`p-5 rounded-xl border transition-all ${isPopulation ? 'bg-blue-50/40 border-blue-500 ring-2 ring-blue-200' : 'bg-green-50/40 border-green-100'}`}>
+                  <div className="flex justify-between items-start mb-1">
+                    <strong className="text-green-900 text-sm">Varianza Poblacional (<InlineMath math="\sigma^2" />)</strong>
+                    {isPopulation && <span className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded font-bold">ACTIVO</span>}
+                  </div>
+                  <p className="text-xs text-gray-500 mb-3">Promedio de las distancias al cuadrado respecto a la media poblacional (<InlineMath math="\mu" />).</p>
+                  <div className="bg-white p-2 rounded shadow-sm text-green-900">
+                    <BlockMath math="\sigma^2 = \frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}" />
+                  </div>
                 </div>
       
-                <div className={`bg-green-50 p-4 rounded-xl border transition-all ${!isPopulation ? 'border-blue-500 ring-2 ring-blue-200' : 'border-green-100'}`}>
-                  <strong className="block text-green-800 mb-1">Varianza Muestral</strong>
-                  <p className="text-xs text-gray-500 mb-2">Estimación basada en una muestra (n - 1).</p>
-                  <BlockMath math="s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1}" />
+                <div className={`p-5 rounded-xl border transition-all ${!isPopulation ? 'bg-blue-50/40 border-blue-500 ring-2 ring-blue-200' : 'bg-green-50/40 border-green-100'}`}>
+                  <div className="flex justify-between items-start mb-1">
+                    <strong className="text-green-900 text-sm">Varianza Muestral (<InlineMath math="s^2" />)</strong>
+                    {!isPopulation && <span className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded font-bold">ACTIVO</span>}
+                  </div>
+                  <p className="text-xs text-gray-500 mb-3">Divide entre <InlineMath math="n-1" /> (Corrección de Bessel) para compensar matemáticamente que la muestra no posee todos los datos reales.</p>
+                  <div className="bg-white p-2 rounded shadow-sm text-green-900">
+                    <BlockMath math="s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}" />
+                  </div>
                 </div>
 
-                <div className="md:col-span-2 bg-green-50 p-4 rounded-xl border border-green-100">
-                  <strong className="block text-green-800 mb-1">Desviación Estándar (<InlineMath math="\sigma \text{ o } s" />)</strong>
-                  <p className="text-xs text-gray-500 mb-2">Raíz cuadrada de la varianza (indica la dispersión en las unidades originales).</p>
-                  <BlockMath math="\sigma = \sqrt{\sigma^2} \quad \text{o} \quad s = \sqrt{s^2}" />
+                {/* Desviación Estándar */}
+                <div className="md:col-span-2 bg-green-50/40 p-5 rounded-xl border border-green-100">
+                  <strong className="block text-green-900 text-sm mb-1">Desviación Estándar (<InlineMath math="\sigma" /> o <InlineMath math="s" />)</strong>
+                  <p className="text-xs text-gray-600 mb-2">
+                    Como la varianza eleva las unidades al cuadrado (ej. <InlineMath math="\text{metros}^2" />), le sacamos raíz cuadrada para regresar a las unidades reales de tus datos (ej. <InlineMath math="\text{metros}" />).
+                  </p>
+                  <div className="bg-white p-2 rounded shadow-sm text-green-900">
+                    <BlockMath math="\sigma = \sqrt{\sigma^2} \quad \text{o} \quad s = \sqrt{s^2}" />
+                  </div>
                 </div>
               </div>
 
               {/* Coeficiente de Variación */}
-              <div className="bg-purple-50 p-4 rounded-xl border border-purple-100 flex items-center justify-between">
-                <div>
-                  <strong className="block text-purple-800">Coeficiente de Variación (CV)</strong>
-                  <p className="text-xs text-gray-500 mt-1">Medida porcentual relativa de dispersión.</p>
+              <div className="bg-purple-50/50 p-5 rounded-xl border border-purple-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex-1">
+                  <strong className="block text-purple-900 text-sm">Coeficiente de Variación (CV)</strong>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Es la dispersión expresada en porcentaje. Sirve para comparar qué grupo varía más aunque se midan en cosas distintas (ej: ¿Varían más los pesos de elefantes en kg o los de hormigas en gramos?).
+                  </p>
                 </div>
-                <div className="bg-white px-6 py-2 rounded-lg shadow-sm">
+                <div className="bg-white px-6 py-3 rounded-lg shadow-sm text-purple-900 shrink-0">
                   <BlockMath math="CV = \frac{s}{|\bar{x}|} \times 100\%" />
                 </div>
               </div>
