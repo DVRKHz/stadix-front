@@ -49,12 +49,33 @@ const menuStructure = [
     title: "No Paramétrica",
     path: "/no-parametrica",
     icon: "≠"
+  },
+  {
+    title: "Manual de Usuario",
+    path: "/manual",
+    icon: "📖"
   }
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
+
+  // Función para abrir la ventana flotante de manera segura en Next.js (Client Component)
+  const openPopup = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+
+    const width = 800;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    window.open(
+      path,
+      "ManualUsuario",
+      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+    );
+  }
 
   return (
     <aside className={`relative bg-white border-r border-gray-200 h-screen flex-shrink-0 transition-all duration-300 ${isOpen ? "w-72" : "w-20"}`}>
@@ -94,6 +115,33 @@ export default function Sidebar() {
           </div>
         )}
       </div>
+
+      <nav className="p-4 overflow-y-auto h-[calc(100vh-160px)]">
+        <ul className="space-y-1">
+          {menuStructure.map((item, index) => {
+            const isActiveMain = pathname.startsWith(item.path);
+            const isManual = item.path === "/manual";
+
+            return (
+              <li key={index} className="mb-2">
+                <Link
+                  href={item.path}
+                  // Si es el manual, ejecutamos la función popup al hacer click
+                  onClick={(e) => isManual && openPopup(e, item.path)}
+                  className={`
+                    flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium
+                    ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
+                    ${isOpen ? "justify-start" : "justify-center"}
+                    `}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
+                  </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
 
       {/* Navegación con Scroll */}
       

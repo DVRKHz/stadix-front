@@ -11,7 +11,7 @@ import { useRef } from 'react';
 import { API_URL } from '@/config/api';
 
 export default function DescriptivePage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2' | 'pdf'>('concepts');
   const [inputData, setInputData] = useState("");
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -121,6 +121,7 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
         <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
+        <button onClick={() => setActiveTab('pdf')} className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${ activeTab === 'pdf' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600" }`}><span>📄</span> Guía Breve</button>
       </div>
 
       {/* TAB 1: CONCEPTOS */}
@@ -520,6 +521,17 @@ cat(paste("Desviación Estándar:", desviacion, "\n"))`;
           </div>
         </div>
       )}
+
+      {activeTab === 'pdf' && (
+        <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
+          <iframe 
+            src="/prueba.pdf" 
+            className="w-full h-full" 
+            title="Visor PDF"
+          />
+        </div>
+      )}
+
     </div>
   );
 }

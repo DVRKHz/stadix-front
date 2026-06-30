@@ -4,7 +4,7 @@ import { useState } from "react";
 import VariableAnalyzer from "@/components/VariableAnalyzer";
 
 export default function VariablesPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2' | 'pdf'>('concepts');
   const [copied, setCopied] = useState(false);
 
   // El código didáctico que mostraremos
@@ -98,6 +98,14 @@ if (tipo == "character") {
         >
           <span>💻</span> Código R
         </button>
+        <button
+          onClick={() => setActiveTab('pdf')}
+          className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${
+            activeTab === 'pdf' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600"
+          }`}
+        >
+        <span>📄</span> Guía Breve
+        </button>
       </div>
 
       {/* --- PESTAÑA 1: CONCEPTOS --- */}
@@ -111,7 +119,7 @@ if (tipo == "character") {
             </p>
           </section>
 
-{/* Variables y Unidades */}
+          {/* Variables y Unidades */}
           <div className="grid md:grid-cols-2 gap-6">
             
             {/* Tarjeta 1: Unidad Muestral */}
@@ -172,7 +180,7 @@ if (tipo == "character") {
 
           </div>
 
-{/* Clasificación Detallada */}
+          {/* Clasificación Detallada */}
           <section className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-lg font-bold text-gray-900 mb-6">Clasificación de Variables y Escalas de Medición</h2>
             <div className="space-y-6">
@@ -366,6 +374,16 @@ if (tipo == "character") {
             </div>
           </div>
         </section>
+      )}
+
+      {activeTab === 'pdf' && (
+        <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
+          <iframe 
+            src="/prueba.pdf" 
+            className="w-full h-full" 
+            title="Visor PDF"
+          />
+        </div>
       )}
 
     </div>

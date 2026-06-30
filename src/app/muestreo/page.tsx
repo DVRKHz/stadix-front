@@ -7,7 +7,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { SamplingPDF } from '@/components/reports/SamplingPDF';
 
 export default function SamplingPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2' | 'pdf'>('concepts');
   
   // Estados (Texto para inputs decimales)
   const [confidence, setConfidence] = useState("95"); // %
@@ -125,6 +125,7 @@ const handleCopyR = () => {
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
         <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
+        <button onClick={() => setActiveTab('pdf')} className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${ activeTab === 'pdf' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600" }`}><span>📄</span> Guía Breve</button>
       </div>
 
       {/* CONCEPTOS */}
@@ -372,6 +373,17 @@ const handleCopyR = () => {
           </div>
         </div>
         )}
+
+      {activeTab === 'pdf' && (
+        <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
+          <iframe 
+            src="/prueba.pdf" 
+            className="w-full h-full" 
+            title="Visor PDF"
+          />
+        </div>
+      )}
+
     </div>
   );
 }

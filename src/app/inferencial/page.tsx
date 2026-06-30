@@ -15,7 +15,7 @@ import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 
 export default function InferencialPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2' | 'pdf'>('concepts');
   const [inputX, setInputX] = useState("");
   const [inputY, setInputY] = useState("");
   const [result, setResult] = useState<any>(null);
@@ -159,6 +159,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🔬 Regresión y Correlación</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
         <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
+        <button onClick={() => setActiveTab('pdf')} className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${ activeTab === 'pdf' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600" }`}><span>📄</span> Guía Breve</button>
       </div>
 
       {/* --- TAB 1: CONCEPTOS --- */}
@@ -167,11 +168,6 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           
           {/* 4.0 Curva Normal */}
           <section className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 opacity-5 text-blue-900">
-              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M0 55 Q 25 55 35 30 T 50 5 T 65 30 T 100 55" />
-              </svg>
-            </div>
   
             <h3 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
               <span>🔔</span>La Curva Normal (Distribución Gaussiana)
@@ -254,7 +250,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           {/* 4.1 Regresión */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">4.1 Regresión Lineal</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Regresión Lineal</h3>
               <p className="text-xs text-gray-500 mb-3">Es una técnica para trazar una &quot;línea recta óptima&quot; a través de tus datos. Sirve para predecir el comportamiento de una variable dependiente (<InlineMath math="Y" />) basándose en una independiente (<InlineMath math="X" />).</p>
             </div>
             <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
@@ -268,7 +264,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           {/* 4.2 Correlación */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">4.2 Correlación de Pearson (<InlineMath math="r" />)</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Correlación de Pearson (<InlineMath math="r" />)</h3>
               <p className="text-xs text-gray-500 mb-2">Mide la fuerza y dirección de la relación lineal entre dos variables cuantitativas. No implica que una cause a la otra.</p>
             </div>
             <div className="bg-gray-50 p-3 rounded text-center text-gray-700 my-2 border border-gray-200/60 overflow-x-auto">
@@ -286,7 +282,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
 
           {/* 4.3 Gráfico de Dispersión (Ocupa el ancho completo del grid en MD) */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm md:col-span-2">
-            <h3 className="font-bold text-gray-800 mb-1">4.3 Gráfico de Dispersión (Scatter Plot)</h3>
+            <h3 className="font-bold text-gray-800 mb-1">Gráfico de Dispersión (Scatter Plot)</h3>
             <p className="text-xs text-gray-500 mb-4">Es el mapa cartesiano donde cada punto representa a un sujeto de estudio con sus dos coordenadas (<InlineMath math="x_i, y_i" />).</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
@@ -312,7 +308,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           {/* 4.4 Covarianza */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">4.4 Covarianza (<InlineMath math="Cov" />)</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Covarianza (<InlineMath math="Cov" />)</h3>
               <p className="text-xs text-gray-500 mb-3">Indica si dos variables &quot;se mueven juntas&quot;. Si es positiva, ambas crecen a la par; si es negativa, cuando una sube la otra baja. El problema es que su valor numérico es difícil de interpretar porque depende de las unidades de medida.</p>
             </div>
             <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
@@ -326,7 +322,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           {/* 4.5 Coeficiente de Determinación */}
           <section className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">4.5 Coeficiente de Determinación (<InlineMath math="R^2" />)</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Coeficiente de Determinación (<InlineMath math="R^2" />)</h3>
               <p className="text-xs text-gray-500 mb-3">Es la &quot;calificación&quot; de tu modelo de regresión lineal (va de 0 a 1, o de 0% a 100%). Te dice exactamente qué porcentaje de la variabilidad de <InlineMath math="Y" /> logra ser explicado por tu recta.</p>
             </div>
             <div className="bg-gray-50 p-3 rounded text-center text-gray-700 mt-auto border border-gray-200/60">
@@ -604,6 +600,17 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
           </div>
         </div>
       )}
+
+      {activeTab === 'pdf' && (
+        <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
+          <iframe 
+            src="/prueba.pdf" 
+            className="w-full h-full" 
+            title="Visor PDF"
+          />
+        </div>
+      )}
+
     </div>
   );
 }

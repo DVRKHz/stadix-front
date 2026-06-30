@@ -11,7 +11,7 @@ import { ProbabilityPDF } from '@/components/reports/ProbabilityPDF';
 import { toPng } from 'html-to-image';
 
 export default function ProbabilityPage() {
-  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2'>('concepts');
+  const [activeTab, setActiveTab] = useState<'concepts' | 'lab' | 'code' | 'code2' | 'pdf'>('concepts');
   const [distType, setDistType] = useState<'binomial' | 'poisson' | 'normal'>('binomial');
   const [copied, setCopied] = useState(false);
   
@@ -181,6 +181,7 @@ cat(sprintf("P(Z < 1.96) Normal: %.4f\n", prob_normal))`;
         <button onClick={() => setActiveTab('lab')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'lab' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>🧮 Calculadora</button>
         <button onClick={() => setActiveTab('code')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código Python</button>
         <button onClick={() => setActiveTab('code2')} className={`pb-3 px-6 text-sm font-bold border-b-2 ${activeTab === 'code2' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400"}`}>💻 Código R</button>
+        <button onClick={() => setActiveTab('pdf')} className={`pb-3 px-6 text-sm font-bold transition-colors border-b-2 whitespace-nowrap flex items-center gap-2 ${ activeTab === 'pdf' ? "border-blue-600 text-blue-600" : "border-transparent text-gray-400 hover:text-gray-600" }`}><span>📄</span> Guía Breve</button>
       </div>
 
       {/* --- TAB 1: CONCEPTOS (TEORÍA COMPLETA CON LATEX) --- */}
@@ -478,6 +479,17 @@ cat(sprintf("P(Z < 1.96) Normal: %.4f\n", prob_normal))`;
 
         </div>
       )}
+
+      {activeTab === 'pdf' && (
+        <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
+          <iframe 
+            src="/prueba.pdf" 
+            className="w-full h-full" 
+            title="Visor PDF"
+          />
+        </div>
+      )}
+
     </div>
   );
 }
