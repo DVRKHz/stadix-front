@@ -5,66 +5,29 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
-
 const menuStructure = [
-  {
-    title: "INICIO",
-    path: "/",
-    icon: "🏠"
-  },
-  {
-    title: "Variables y Datos",
-    path: "/variables",
-    icon: "🔍"
-  },
-  {
-    title: "Organización de Datos",
-    path: "/organizacion",
-    icon: "📊",
-  },
-  {
-    title: "Estadística Descriptiva",
-    path: "/descriptive",
-    icon: "∑",
-  },
+  { title: "INICIO", path: "/", icon: "🏠" },
+  { title: "Variables y Datos", path: "/variables", icon: "🔍" },
+  { title: "Organización de Datos", path: "/organizacion", icon: "📊" },
+  { title: "Estadística Descriptiva", path: "/descriptive", icon: "∑" },
   {
     title: "Estadística Inferencial",
     path: "/inferencial",
     icon: "🔮",
-    submenu: [
-      { title: "Pruebas Hipótesis", path: "/inferencial/pruebas" }
-    ]
+    submenu: [{ title: "Pruebas Hipótesis", path: "/inferencial/pruebas" }]
   },
-  {
-    title: "Probabilidad",
-    path: "/probabilidad",
-    icon: "🎲"
-  },
-  {
-    title: "Muestreo",
-    path: "/muestreo",
-    icon: "🎯"
-  },
-  {
-    title: "No Paramétrica",
-    path: "/no-parametrica",
-    icon: "≠"
-  },
-  {
-    title: "Manual de Usuario",
-    path: "/manual",
-    icon: "📖"
-  }
+  { title: "Probabilidad", path: "/probabilidad", icon: "🎲" },
+  { title: "Muestreo", path: "/muestreo", icon: "🎯" },
+  { title: "No Paramétrica", path: "/no-parametrica", icon: "≠" },
+  { title: "Manual de Usuario", path: "/manual", icon: "📖" }
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
 
-  // Función para abrir la ventana flotante de manera segura en Next.js (Client Component)
   const openPopup = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
-
     const width = 800;
     const height = 600;
     const left = window.screen.width / 2 - width / 2;
@@ -75,7 +38,7 @@ export default function Sidebar() {
       "ManualUsuario",
       `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
     );
-  }
+  };
 
   return (
     <aside className={`relative bg-white border-r border-gray-200 h-screen flex-shrink-0 transition-all duration-300 ${isOpen ? "w-72" : "w-20"}`}>
@@ -116,6 +79,7 @@ export default function Sidebar() {
         )}
       </div>
 
+      {/* ÚNICO NAVEGADOR CON SCROLL */}
       <nav className="p-4 overflow-y-auto h-[calc(100vh-160px)]">
         <ul className="space-y-1">
           {menuStructure.map((item, index) => {
@@ -126,34 +90,7 @@ export default function Sidebar() {
               <li key={index} className="mb-2">
                 <Link
                   href={item.path}
-                  // Si es el manual, ejecutamos la función popup al hacer click
                   onClick={(e) => isManual && openPopup(e, item.path)}
-                  className={`
-                    flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium
-                    ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
-                    ${isOpen ? "justify-start" : "justify-center"}
-                    `}
-                  >
-                    <span className="text-lg">{item.icon}</span>
-                    {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
-                  </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
-
-      {/* Navegación con Scroll */}
-      
-      <nav className="p-4 overflow-y-auto h-[calc(100vh-160px)]">
-        <ul className="space-y-1">
-          {menuStructure.map((item, index) => {
-            const isActiveMain = pathname.startsWith(item.path);
-            
-            return (
-              <li key={index} className="mb-2">
-                <Link
-                  href={item.path}
                   className={`
                     flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium
                     ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
@@ -164,11 +101,12 @@ export default function Sidebar() {
                   {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
                 </Link>
 
+                {/* Submenú integrado */}
                 {isOpen && item.submenu && (
                   <ul className="mt-1 ml-9 space-y-1 border-l-2 border-gray-100 pl-2">
                     {item.submenu.map((sub, subIndex) => {
-                       const isActiveSub = pathname === sub.path;
-                       return (
+                      const isActiveSub = pathname === sub.path;
+                      return (
                         <li key={subIndex}>
                           <Link 
                             href={sub.path}
@@ -177,7 +115,7 @@ export default function Sidebar() {
                             {sub.title}
                           </Link>
                         </li>
-                       )
+                      );
                     })}
                   </ul>
                 )}
@@ -187,13 +125,10 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      {/* Footer con LOGOS INSTITUCIONALES (UNACH y CEDES) */}
+      {/* Footer con LOGOS INSTITUCIONALES */}
       <div className="absolute bottom-0 w-full border-t border-gray-100 bg-gray-50 flex items-center justify-center h-20 px-2">
         {isOpen ? (
-          /* Versión Expandida: Ajuste de proporciones para compensar tamaños visuales */
           <div className="flex items-center justify-between w-full h-14 px-1 gap-1">
-            
-            {/* Contenedor UNACH (42% del ancho disponible) */}
             <div className="relative w-[42%] h-full opacity-90 hover:opacity-100 transition-opacity">
               <Image 
                 src="/Logo_de_la_UNACH.svg.png" 
@@ -203,11 +138,7 @@ export default function Sidebar() {
                 className="object-contain"
               />
             </div>
-            
-            {/* Separador */}
             <div className="h-8 w-[1px] bg-gray-200 flex-shrink-0" /> 
-            
-            {/* Contenedor CEDES (53% del ancho disponible para compensar sus márgenes internos) */}
             <div className="relative w-[53%] h-full opacity-90 hover:opacity-100 transition-opacity">
               <Image 
                 src="/logo-cedes.png" 
@@ -219,7 +150,6 @@ export default function Sidebar() {
             </div>
           </div>
         ) : (
-          /* Versión Colapsada: Logos ligeramente más grandes que antes (w-7 h-7) */
           <div className="flex flex-col items-center justify-center gap-1.5 py-1">
             <div className="relative w-7 h-7 opacity-90">
               <Image 
