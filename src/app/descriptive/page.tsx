@@ -71,30 +71,43 @@ moda = stats.mode(datos)
 varianza = stats.variance(datos)
 desviacion = stats.stdev(datos)
 
+# Mostrar resultados por pantalla
+print("--- Medidas de Tendencia Central ---")
 print(f"Media: {media}")
-print(f"Desviación Estándar: {desviacion}")`;
+print(f"Mediana: {mediana}")
+print(f"Moda: {moda}")
+
+print("--- Medidas de Dispersión ---")
+print(f"Varianza: {varianza:.2f}")
+print(f"Desviación Estándar: {desviacion:.2f}")`;
 
   // Código R básico y didáctico para la pestaña 4
-  const rCode = `# Cálculo de Estadísticos Descriptivos Básicos en R
+  const rCode = `# Cálculo de Estadísticos Descriptivos Básicos
 
-# Vector de datos (usamos c para combinar los valores)
 datos <- c(10, 12, 23, 23, 16, 23, 21, 16)
 
 # 3.1 Tendencia Central
 media   <- mean(datos)
 mediana <- median(datos)
 
-# R base no tiene una función 'mode' estadística directa. 
-# Usamos una combinación para encontrar el valor más frecuente:
-moda <- names(which.max(table(datos)))
+# R no tiene una función 'mode()' para la moda estadística (mode() en R devuelve el tipo de dato).
+# Usamos la tabla de frecuencias para encontrar el valor que más se repite.
+tabla_frecuencias <- table(datos)
+moda <- as.numeric(names(tabla_frecuencias)[tabla_frecuencias == max(tabla_frecuencias)])
 
 # 3.2 Dispersión
-varianza   <- var(datos)  # Varianza muestral
-desviacion <- sd(datos)   # Desviación estándar muestral
+varianza   <- var(datos)
+desviacion <- sd(datos)
 
-# Imprimir resultados
-cat(paste("Media:", media, "\n"))
-cat(paste("Desviación Estándar:", desviacion, "\n"))`;
+# Mostrar resultados por pantalla
+cat("--- Medidas de Tendencia Central ---\n")
+cat("Media:", media, "\n")
+cat("Mediana:", mediana, "\n")
+cat("Moda:", moda, "\n\n")
+
+cat("--- Medidas de Dispersión ---\n")
+cat("Varianza:", round(varianza, 2), "\n")
+cat("Desviación Estándar:", round(desviacion, 2), "\n")`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(pythonCode);
