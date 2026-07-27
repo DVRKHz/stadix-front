@@ -361,7 +361,7 @@ if (p < 0.05) {
       {activeTab === 'pdf' && (
         <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
           <iframe 
-            src="/prueba.pdf" 
+            src="/Manual_no_parametrica.pdf" 
             className="w-full h-full" 
             title="Visor PDF"
           />

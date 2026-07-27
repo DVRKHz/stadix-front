@@ -604,7 +604,7 @@ cat(sprintf("Correlación (r): %.4f\n", r))`;
       {activeTab === 'pdf' && (
         <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
           <iframe 
-            src="/prueba.pdf" 
+            src="/Manual_estadistica_inferencial.pdf" 
             className="w-full h-full" 
             title="Visor PDF"
           />

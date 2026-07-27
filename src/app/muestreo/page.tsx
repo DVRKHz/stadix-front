@@ -377,7 +377,7 @@ const handleCopyR = () => {
       {activeTab === 'pdf' && (
         <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
           <iframe 
-            src="/prueba.pdf" 
+            src="/Manual_muestreo.pdf" 
             className="w-full h-full" 
             title="Visor PDF"
           />

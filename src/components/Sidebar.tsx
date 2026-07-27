@@ -19,14 +19,14 @@ const menuStructure = [
   { title: "Probabilidad", path: "/probabilidad", icon: "🎲" },
   { title: "Muestreo", path: "/muestreo", icon: "🎯" },
   { title: "No Paramétrica", path: "/no-parametrica", icon: "≠" },
-  { title: "Manual de Usuario", path: "/manual", icon: "📖" }
+  { title: "Manual de Usuario", path: "/Manual_Completo_STADIX.pdf", icon: "📖" }
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
 
-  const openPopup = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+  const openPopup = (e: React.MouseEvent<HTMLButtonElement>, path: string) => {
     e.preventDefault();
     const width = 800;
     const height = 600;
@@ -84,22 +84,36 @@ export default function Sidebar() {
         <ul className="space-y-1">
           {menuStructure.map((item, index) => {
             const isActiveMain = pathname.startsWith(item.path);
-            const isManual = item.path === "/manual";
+            const isManual = item.path === "/Manual_Completo_STADIX.pdf";
 
             return (
               <li key={index} className="mb-2">
-                <Link
-                  href={item.path}
-                  onClick={(e) => isManual && openPopup(e, item.path)}
-                  className={`
-                    flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium
-                    ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
-                    ${isOpen ? "justify-start" : "justify-center"}
-                  `}
-                >
-                  <span className="text-lg">{item.icon}</span>
-                  {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
-                </Link>
+                {isManual ? (
+                  <button
+                    type="button"
+                    onClick={(e) => openPopup(e, item.path)}
+                    className={`
+                      w-full flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium text-left
+                      ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
+                      ${isOpen ? "justify-start" : "justify-center"}
+                    `}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.path}
+                    className={`
+                      flex items-center px-3 py-2.5 rounded-lg transition-colors font-medium
+                      ${isActiveMain ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}
+                      ${isOpen ? "justify-start" : "justify-center"}
+                    `}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {isOpen && <span className="ml-3 text-sm truncate">{item.title}</span>}
+                  </Link>
+                )}
 
                 {/* Submenú integrado */}
                 {isOpen && item.submenu && (

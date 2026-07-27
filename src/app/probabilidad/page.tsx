@@ -483,7 +483,7 @@ cat(sprintf("P(Z < 1.96) Normal: %.4f\n", prob_normal))`;
       {activeTab === 'pdf' && (
         <div className="w-full h-[600px] bg-white rounded-lg shadow-sm overflow-hidden">
           <iframe 
-            src="/prueba.pdf" 
+            src="/Manual_probabilidad.pdf" 
             className="w-full h-full" 
             title="Visor PDF"
           />
