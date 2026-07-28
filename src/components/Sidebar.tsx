@@ -14,7 +14,7 @@ const menuStructure = [
     title: "Estadística Inferencial",
     path: "/inferencial",
     icon: "🔮",
-    submenu: [{ title: "Pruebas Hipótesis", path: "/inferencial/pruebas" }]
+    submenu: [{ title: "Pruebas de Hipótesis", path: "/inferencial/pruebas" }]
   },
   { title: "Probabilidad", path: "/probabilidad", icon: "🎲" },
   { title: "Muestreo", path: "/muestreo", icon: "🎯" },
